@@ -1,5 +1,5 @@
 const champions = require("./json-lol/champions.json")
-const spectator = require("./json-lol/spectator.json")
+// const spectator = require("./json-lol/spectator.json")
 
 // match.json 다루기 예제
 // match.matches.forEach(item => {
@@ -155,33 +155,39 @@ function elapsedTimeFormatter(ctime){
 
 
 
-let blue_obj = {teamId:100,isAlly:false,teamArr:[]}
-let red_obj = {teamId:200,isAlly:false,teamArr:[]}
-spectator.participants.forEach(item => {
-    if(item.teamId === 100){   
-        blue_obj.teamArr.push(`${item.summonerName} (${item.championId})`)
-    }else if(item.teamId === 200){
-        red_obj.teamArr.push(`${item.summonerName} (${item.championId})`)
-    }
-    if("논현동지영이" === item.summonerName) {
-        if(item.teamId===100){
-            blue_obj.isAlly = true
-        }else{
-            red_obj.isAlly = true
-        }
-    }
-})
+// let blue_obj = {teamId:100,isAlly:false,teamArr:[]}
+// let red_obj = {teamId:200,isAlly:false,teamArr:[]}
+// spectator.participants.forEach(item => {
+//     if(item.teamId === 100){   
+//         blue_obj.teamArr.push(`${item.summonerName} (${item.championId})`)
+//     }else if(item.teamId === 200){
+//         red_obj.teamArr.push(`${item.summonerName} (${item.championId})`)
+//     }
+//     if("논현동지영이" === item.summonerName) {
+//         if(item.teamId===100){
+//             blue_obj.isAlly = true
+//         }else{
+//             red_obj.isAlly = true
+//         }
+//     }
+// })
+
 // console.log(`${getQueueType(spectator.gameQueueConfigId)} 진행중`)
 
-console.log("같은 팀")
-const allies = blue_obj.isAlly ? blue_obj : red_obj
-allies.teamArr.forEach(item => {
-    console.log(`    ${item}`)
-})
-console.log("상대팀")
-const enemies = !blue_obj.isAlly ? blue_obj : red_obj
-enemies.teamArr.forEach(item => {
-    console.log(`    ${item}`)
-})
+// console.log("같은 팀")
+// const allies = blue_obj.isAlly ? blue_obj : red_obj
+// allies.teamArr.forEach(item => {
+//     console.log(`    ${item}`)
+// })
+// console.log("상대팀")
+// const enemies = !blue_obj.isAlly ? blue_obj : red_obj
+// enemies.teamArr.forEach(item => {
+//     console.log(`    ${item}`)
+// })
 
-console.log(elapsedTimeFormatter(new Date().getTime()-1602342670535))
+// console.log(elapsedTimeFormatter(new Date().getTime()-1602342670535))
+
+const nameObj = {탑:"TOP", 정글:"JUNGLE", 미드:"MID", 바텀:"ADC", 서폿:"SUPPORT"}
+console.log(nameObj)
+
+console.log(nameObj.탑)

@@ -18,11 +18,20 @@ const { match } = require('assert')
 // const matchDetail = require("./json-lol/match-detail.json")
 
 const info = champions.data
+const posiotionEnName = {탑:"TOP", 정글:"JUNGLE", 미드:"MID", 바텀:"ADC", 원딜:"ADC", 서포터:"SUPPORT", 서폿:"SUPPORT"}
 
 const getChampionName = id => {
     for (const [enName, obj] of Object.entries(info)) {
         if(obj.key === ""+id){
             return obj.name
+        }
+    }
+}
+
+const getChampionEnName = krName => {
+    for (const [enName, obj] of Object.entries(info)) {
+        if(obj.name === krName){
+            return enName
         }
     }
 }
@@ -92,8 +101,6 @@ client.on("ready", () => {
     })
 })
 
-//let msg = "  !롤 논현동지영이 전적 샤코"
-
 client.on("message", msg => {
 
     if(msg.author.bot) return
@@ -119,8 +126,12 @@ client.on("message", msg => {
             tmpMsg += "!롤* [소환사명]* 전적* [챔피언명]\n"
             tmpMsg += "!롤* [소환사명]* 전적* [게임분류]\n"
             tmpMsg += "!롤* [소환사명]* 전적* [챔피언명] [게임분류]\n"
-            
             tmpMsg += "\n"
+            
+            tmpMsg += "!옵지* 꿀챔* [포지션명]* \n"
+            tmpMsg += "!옵지* 카운터* [챔피언명]* [포지션명]*\n"
+            tmpMsg += "\n"
+
             tmpMsg += "게임분류 : 솔랭,일반,자랭,칼바람\n"
 
             return msg.reply(tmpMsg)
@@ -255,7 +266,7 @@ client.on("message", msg => {
                             if(content.length === 3){
                                 // 전적만 입력시
 
-                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?endIndex=10&beginIndex=0&api_key=${keys.riotAPI}`
+                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
                             }else if(content.length === 4){
                                 // 챔피언, 게임분류 입력시
 
@@ -267,7 +278,7 @@ client.on("message", msg => {
                                         console.log(autoMessage["bad-input"])
                                         return msg.reply(autoMessage["bad-input"])
                                     }
-                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?queue=${queueId}&endIndex=10&beginIndex=0&api_key=${keys.riotAPI}`
+                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?queue=${queueId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
 
                                 }else{
                                     const championId = getChampionId(content[3])
@@ -276,7 +287,7 @@ client.on("message", msg => {
                                         console.log(autoMessage["bad-input"])
                                         return msg.reply(autoMessage["bad-input"])
                                     }
-                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&endIndex=10&beginIndex=0&api_key=${keys.riotAPI}`
+                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
                                 }
 
                             }else if(content.length === 5){
@@ -295,7 +306,7 @@ client.on("message", msg => {
                                     console.log(autoMessage["bad-input"])
                                     return msg.reply(autoMessage["bad-input"])
                                 }
-                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&queue=${queueId}&endIndex=10&beginIndex=0&api_key=${keys.riotAPI}`
+                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&queue=${queueId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
                             }else{
                                 console.log("전적 => " + autoMessage["bad-input"])
                                 return msg.reply(autoMessage["bad-input"])
@@ -310,13 +321,24 @@ client.on("message", msg => {
                                         ]
                             
                             // 전적 검색 시작
-                            request(requestUrl, (error, response, body) => {
+                            const getMatchData = new Promise((resolve, reject) => {
+                                request(requestUrl, (error, response, body) => {
+                                    if(error) throw error
+                                    if(response.statusCode === 200){
+                                        // const matches_obj = JSON.parse(body).matches
+                                        resolve(JSON.parse(body).matches)
+                                    }else{
+                                        console.log("전적.검색실패 => " + autoMessage["non-info"])
+                                        return msg.reply(autoMessage["non-info"])
+                                    }
+                                })
+                            })
 
-                                if(error) throw error
+                            getMatchData.then(matchData => {
 
-                                if(response.statusCode === 200){
+                                setTimeout(() => {
 
-                                    const matches_obj = JSON.parse(body).matches
+                                    const matches_obj = matchData
 
                                     // 검색한 게임 수
                                     let count = matches_obj.length
@@ -324,17 +346,8 @@ client.on("message", msg => {
 
                                     let gameId
 
-                                    function delay() {
-                                        return new Promise(resolve => setTimeout(resolve, 500));
-                                    }                                  
-                                    async function delayedLog() {
-                                        await delay()
-                                    }
+                                    matches_obj.forEach(item => {
 
-                                    matches_obj.forEach(async item => {
-
-                                        await delayedLog()
-                                        
                                         gameId = item.gameId
 
                                         requestUrl = `${keys.riotUrl}/match/v4/matches/${gameId}?api_key=${keys.riotAPI}`
@@ -426,34 +439,6 @@ client.on("message", msg => {
                                                             tmpMsg += `평균 딜량 순위 : 팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등\n`
                                                             tmpMsg += '\n'
 
-                                                            // // 게임타입
-                                                            // console.log(`${getQueueType(item.queueType)}`)
-
-                                                            // // 승패 및 승률
-                                                            // console.log(`${item.win}승 ${item.losses}패 (${Math.floor(100*item.win/(item.win+item.losses))}%)`)
-
-                                                            // // 사용한 챔피언
-                                                            // const res = item.champions.reduce((acc, championId) => {
-                                                            //     acc[getChampionName(championId)] = (acc[getChampionName(championId)] || 0) + 1
-                                                            //     return acc
-                                                            // },{})
-                                                            // let championLog = ""
-                                                            // Object.entries(res).forEach(([name, cnt], index) => {
-                                                            //     if(index === Object.keys(res).length-1){
-                                                            //         championLog += `${name} ${cnt}`
-                                                            //     }else{
-                                                            //         championLog += `${name} ${cnt}, `
-                                                            //     }
-                                                            // })
-                                                            // console.log(`사용한 챔피언 : ${championLog}`)
-
-                                                            // // K/D/A
-                                                            // console.log(`K/D/A : ${item.kill}/${item.death}/${item.assist} (${((item.kill+item.assist)/(item.death === 0 ? 1/1.2 : item.death)).toFixed(2)})`)
-
-                                                            // // 딜량 순위
-                                                            // console.log(`평균 딜량 순위 : 팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등`)
-                                                            // console.log()
-
                                                         }
                                                     })
 
@@ -477,11 +462,7 @@ client.on("message", msg => {
                                         return msg.reply(autoMessage["non-info"])
                                     }
 
-                                }else{
-                                    console.log("전적.검색실패 => " + autoMessage["non-info"])
-                                    return msg.reply(autoMessage["non-info"])
-                                }
-
+                                },1500)
                             })
 
                         }
@@ -496,6 +477,143 @@ client.on("message", msg => {
 
                 })
 
+            }
+
+        }else if(content.startsWith("옵지")){
+
+            // 모든 공백 1칸으로
+            content = content.replace(/ +/g, " ")
+            content = content.split(" ")
+
+            if(content.length < 3){
+                console.log("메시지 => " + autoMessage["bad-input"])
+                return msg.reply(autoMessage["bad-input"])
+            }
+
+            // 웹 드라이버 초기화
+            const webdriver = require('selenium-webdriver')
+            const By = webdriver.By
+            const until = webdriver.until
+            // 사용할 브라우저 드라이버 초기화
+            const chrome = require('selenium-webdriver/chrome')
+            // 드라이버 초기화
+            const driver = new webdriver.Builder().forBrowser('chrome').build()
+
+            const flag = content[1]
+
+            if(flag === "꿀챔"){
+
+                let position = content[2]
+
+                if(!Object.keys(posiotionEnName).includes(position)){
+                    console.log("옵지.꿀챔 => " + autoMessage["bad-input"])
+                    return msg.reply(autoMessage["bad-input"])
+                }
+
+                if(position === "원딜") position = "바텀"
+                else if(position === "서폿") position = "서포터"
+
+                const url = 'https://www.op.gg/champion/statistics'
+
+                driver.get(url)
+
+                // 1) 티어 클릭
+                driver.findElement(By.className("tabHeader champion-tier")).click()
+
+                // 2) 탑(TOP), 정글(JUNGLE), 미드(MID), 바텀(BOTTOM), 서포터(SUPPORT) 중 택1
+                const positionTabs = driver.findElements(By.className("champion-index-trend-position__item tabHeader"))
+
+                positionTabs.then(elements => {
+
+                    let clickPromiseArr = elements.map(element => {return element})
+            
+                    let positionPromiseArr = elements.map(element => {
+                        return element.getText()
+                    })
+            
+                    Promise.all(positionPromiseArr).then(arr => {
+                        const idx = arr.findIndex(item => item === position)
+                        clickPromiseArr[idx].click().then(() => {
+                            let nameArr = []
+                            const opName = driver.findElement(By.className(`tabItem champion-trend-tier-${posiotionEnName[position]}`)).findElements(By.className("champion-index-table__name"))
+            
+                            const namePromise = new Promise((resolve, reject) => {
+                                opName.then(elements => {
+                                    for (var i=0; i < 10; i++){
+                                        elements[i].getText().then(txt => {
+                                            nameArr.push(txt)
+                                            if(nameArr.length === 10) resolve(nameArr)
+                                        })
+                                    }
+                                })
+                            })
+            
+                            namePromise.then(arr => {
+                                arr.forEach((value, idx) => {
+                                    tmpMsg += `${idx+1}위 ${value}\n`
+                                })
+                                driver.close()
+                                return msg.reply(tmpMsg)
+                            })
+                        })
+            
+                    })
+            
+                })
+
+            }else if(flag === "카운터"){
+
+                if(content.length < 4){
+                    console.log("옵지.카운터 => " + autoMessage["bad-input"])
+                    return msg.reply(autoMessage["bad-input"])
+                }
+
+                const championName = getChampionEnName(content[2])
+                const position = posiotionEnName[content[3]]
+
+                if(typeof championName === "undefined" || typeof position === "undefined"){
+                    console.log("옵지.카운터 => " + autoMessage["bad-input"])
+                    return msg.reply(autoMessage["bad-input"])
+                }
+
+                const url = `https://www.op.gg/champion/${championName}/statistics/${position}`
+                driver.get(url)
+
+                driver.findElement(By.linkText("카운터")).click().then(() => {
+                    
+                    // 간헐적 에러발생으로 인한 setTimeOut
+                    setTimeout(() => {
+
+                        driver.wait(until.elementIsVisible(driver.findElement(By.className("champion-matchup-sort__button champion-matchup-sort__button--winrate")))).then(() => {
+                            const btn = driver.findElement(By.className("champion-matchup-sort__button champion-matchup-sort__button--winrate"))
+                            btn.click().then(btn.click().then(()=>{
+                                driver.findElements(By.className("champion-matchup-champion-list__item")).then(elements => {
+                    
+                                    let namePromiseArr = elements.map(element => {
+                                        return element.findElement(By.tagName("span")).getText().then(txt => {
+                                            return txt
+                                        })
+                                    })
+                    
+                                    Promise.all(namePromiseArr).then(names => {
+                                        for(let i=0; i<(names.length >= 10 ? 10 : names.length); i++){
+                                            // console.log(names[i])
+                                            tmpMsg += `${i+1}위 ${names[i]}\n`
+                                        }
+                                        driver.close()
+                                        return msg.reply(tmpMsg)
+                                    })
+                    
+                                })
+                    
+                            }))
+                            
+                        })
+
+                    },1000)
+
+                })
+                
             }
 
         }else{
