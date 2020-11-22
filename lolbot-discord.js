@@ -134,7 +134,8 @@ client.on("message", msg => {
 
             tmpMsg += "게임분류 : 솔랭,일반,자랭,칼바람\n"
 
-            return msg.reply(tmpMsg)
+            msg.author.send(tmpMsg)
+            // return msg.reply(tmpMsg)
 
         }else if(content.startsWith("롤")){
 
@@ -183,7 +184,8 @@ client.on("message", msg => {
 
                                     if(league_obj.findIndex(obj => obj.queueType === "RANKED_SOLO_5x5") === -1){
                                         console.log("티어 => " + autoMessage["only-rank"])
-                                        return msg.reply(autoMessage["only-rank"])
+                                        msg.author.send(autoMessage["only-rank"])
+                                        // return msg.reply(autoMessage["only-rank"])
                                     }
 
                                     league_obj.forEach(item => {
@@ -192,7 +194,9 @@ client.on("message", msg => {
                                             tmpMsg += `소환사명 : ${item.summonerName}\n`
                                             tmpMsg += `티어 : ${item.tier} ${item.rank} ${item.leaguePoints}pt\n`
                                             tmpMsg += `${item.wins}승 ${item.losses}패 (${Math.round(100*item.wins/(item.wins+item.losses))}%)`
-                                            return msg.reply(tmpMsg)
+
+                                            msg.author.send(tmpMsg)
+                                            // return msg.reply(tmpMsg)
 
                                             // console.log(`소환사명 : ${item.summonerName}`)
                                             // console.log(`티어 : ${item.tier} ${item.rank} ${item.leaguePoints}pt`)
@@ -202,7 +206,9 @@ client.on("message", msg => {
 
                                 }else{
                                     console.log("티어 => " + autoMessage["non-info"])
-                                    return msg.reply(autoMessage["non-info"])
+
+                                    msg.author.send(autoMessage["non-info"])
+                                    // return msg.reply(autoMessage["non-info"])
                                 }
 
                             })
@@ -248,11 +254,14 @@ client.on("message", msg => {
                                         tmpMsg+=`    ${item}\n`
                                     })
 
-                                    return msg.reply(tmpMsg)
+                                    msg.author.send(tmpMsg)
+                                    //return msg.reply(tmpMsg)
 
                                 }else{
                                     console.log("관전 => " + autoMessage["non-info"])
-                                    return msg.reply(autoMessage["non-info"])
+
+                                    msg.author.send(autoMessage["non-info"])
+                                    // return msg.reply(autoMessage["non-info"])
                                 }
 
                             })
@@ -276,7 +285,9 @@ client.on("message", msg => {
                                     // 잘못된 게임 종류 입력시
                                     if(typeof queueId === "undefined"){
                                         console.log(autoMessage["bad-input"])
-                                        return msg.reply(autoMessage["bad-input"])
+
+                                        msg.author.send(autoMessage["bad-input"])
+                                        // return msg.reply(autoMessage["bad-input"])
                                     }
                                     requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?queue=${queueId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
 
@@ -285,7 +296,9 @@ client.on("message", msg => {
                                     // 잘못된 챔피언 이름 입력시
                                     if(typeof championId === "undefined"){
                                         console.log(autoMessage["bad-input"])
-                                        return msg.reply(autoMessage["bad-input"])
+
+                                        msg.author.send(autoMessage["bad-input"])
+                                        // return msg.reply(autoMessage["bad-input"])
                                     }
                                     requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
                                 }
@@ -297,19 +310,25 @@ client.on("message", msg => {
                                 // 잘못된 챔피언 이름 입력시
                                 if(typeof championId === "undefined"){
                                     console.log(autoMessage["bad-input"])
-                                    return msg.reply(autoMessage["bad-input"])
+                                    
+                                    msg.author.send(autoMessage["bad-input"])
+                                    // return msg.reply(autoMessage["bad-input"])
                                 }
                                 
                                 const queueId = getQueueId(content[4])
                                 // 잘못된 게임 종류 입력시
                                 if(typeof queueId === "undefined"){
                                     console.log(autoMessage["bad-input"])
-                                    return msg.reply(autoMessage["bad-input"])
+
+                                    msg.author.send(autoMessage["bad-input"])
+                                    // return msg.reply(autoMessage["bad-input"])
                                 }
                                 requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&queue=${queueId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
                             }else{
                                 console.log("전적 => " + autoMessage["bad-input"])
-                                return msg.reply(autoMessage["bad-input"])
+
+                                msg.author.send(autoMessage["bad-input"])
+                                // return msg.reply(autoMessage["bad-input"])
                             }
 
                             const refObj = {cnt:0,win:0,losses:0,kill:0,death:0,assist:0,damageInTeam:0,damageInAll:0}
@@ -329,7 +348,9 @@ client.on("message", msg => {
                                         resolve(JSON.parse(body).matches)
                                     }else{
                                         console.log("전적.검색실패 => " + autoMessage["non-info"])
-                                        return msg.reply(autoMessage["non-info"])
+
+                                        msg.author.send(autoMessage["non-info"])
+                                        // return msg.reply(autoMessage["non-info"])
                                     }
                                 })
                             })
@@ -442,15 +463,20 @@ client.on("message", msg => {
                                                         }
                                                     })
 
-                                                    return msg.reply(tmpMsg)
+                                                    msg.author.send(tmpMsg)
+                                                    // return msg.reply(tmpMsg)
                                                 }
 
                                             }else if(response.statusCode){
                                                 console.log("전적.검색 => " + autoMessage["limit-exceeded"])
-                                                return msg.reply(autoMessage["limit-exceeded"])
+
+                                                msg.author.send(autoMessage["limit-exceeded"])
+                                                // return msg.reply(autoMessage["limit-exceeded"])
                                             }else{
                                                 console.log("전적.검색 => " + autoMessage["non-info"])
-                                                return msg.reply(autoMessage["non-info"])
+
+                                                msg.author.send(autoMessage["non-info"])
+                                                // return msg.reply(autoMessage["non-info"])
                                             }
 
                                         })
@@ -459,7 +485,9 @@ client.on("message", msg => {
 
                                     if(matches_obj.length === 0){
                                         console.log("전적.검색.결과 => " + autoMessage["non-info"])
-                                        return msg.reply(autoMessage["non-info"])
+
+                                        msg.author.send(autoMessage["non-info"])
+                                        // return msg.reply(autoMessage["non-info"])
                                     }
 
                                 },1500)
@@ -469,10 +497,14 @@ client.on("message", msg => {
 
                     }else if(response.statusCode === 403){
                         console.log("소환사명 => " + autoMessage["bad-access"])
-                        return msg.reply(autoMessage["bad-access"])
+
+                        msg.author.send(autoMessage["bad-access"])
+                        // return msg.reply(autoMessage["bad-access"])
                     }else{
                         console.log("소환사명 => " + autoMessage["bad-input"])
-                        return msg.reply(autoMessage["bad-input"])
+
+                        msg.author.send(autoMessage["bad-input"])
+                        // return msg.reply(autoMessage["bad-input"])
                     }
 
                 })
@@ -487,7 +519,9 @@ client.on("message", msg => {
 
             if(content.length < 3){
                 console.log("메시지 => " + autoMessage["bad-input"])
-                return msg.reply(autoMessage["bad-input"])
+
+                msg.author.send(autoMessage["bad-input"])
+                // return msg.reply(autoMessage["bad-input"])
             }
 
             // 웹 드라이버 초기화
@@ -507,7 +541,9 @@ client.on("message", msg => {
 
                 if(!Object.keys(posiotionEnName).includes(position)){
                     console.log("옵지.꿀챔 => " + autoMessage["bad-input"])
-                    return msg.reply(autoMessage["bad-input"])
+
+                    msg.author.send(autoMessage["bad-input"])
+                    // return msg.reply(autoMessage["bad-input"])
                 }
 
                 if(position === "원딜") position = "바텀"
@@ -553,7 +589,10 @@ client.on("message", msg => {
                                     tmpMsg += `${idx+1}위 ${value}\n`
                                 })
                                 driver.close()
-                                return msg.reply(tmpMsg)
+
+                                msg.author.send(tmpMsg)
+                                
+                                // return msg.reply(tmpMsg)
                             })
                         })
             
@@ -565,7 +604,9 @@ client.on("message", msg => {
 
                 if(content.length < 4){
                     console.log("옵지.카운터 => " + autoMessage["bad-input"])
-                    return msg.reply(autoMessage["bad-input"])
+
+                    msg.author.send(autoMessage["bad-input"])
+                    // return msg.reply(autoMessage["bad-input"])
                 }
 
                 const championName = getChampionEnName(content[2])
@@ -573,7 +614,9 @@ client.on("message", msg => {
 
                 if(typeof championName === "undefined" || typeof position === "undefined"){
                     console.log("옵지.카운터 => " + autoMessage["bad-input"])
-                    return msg.reply(autoMessage["bad-input"])
+
+                    msg.author.send(autoMessage["bad-input"])
+                    // return msg.reply(autoMessage["bad-input"])
                 }
 
                 const url = `https://www.op.gg/champion/${championName}/statistics/${position}`
@@ -601,7 +644,9 @@ client.on("message", msg => {
                                             tmpMsg += `${i+1}위 ${names[i]}\n`
                                         }
                                         driver.close()
-                                        return msg.reply(tmpMsg)
+
+                                        msg.author.send(tmpMsg)
+                                        // return msg.reply(tmpMsg)
                                     })
                     
                                 })
@@ -618,7 +663,9 @@ client.on("message", msg => {
 
         }else{
             console.log("메시지 => " + autoMessage["bad-input"])
-            return msg.reply(autoMessage["bad-input"])
+
+            msg.author.send(autoMessage["bad-input"])
+            // return msg.reply(autoMessage["bad-input"])
         }
 
     }

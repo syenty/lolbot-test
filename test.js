@@ -187,7 +187,7 @@ function elapsedTimeFormatter(ctime){
 
 // console.log(elapsedTimeFormatter(new Date().getTime()-1602342670535))
 
-const nameObj = {탑:"TOP", 정글:"JUNGLE", 미드:"MID", 바텀:"ADC", 서폿:"SUPPORT"}
-console.log(nameObj)
+// const nameObj = {탑:"TOP", 정글:"JUNGLE", 미드:"MID", 바텀:"ADC", 서폿:"SUPPORT"}
+// console.log(nameObj)
 
-console.log(nameObj.탑)
+// console.log(nameObj.탑)
