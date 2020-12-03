@@ -1,0 +1,17 @@
+{
+    "name": "lolbot_discord_app",
+    "version": "1.0.0",
+    "description": "lolbot-discord.js on Docker",
+    "author": "syenty <tog1993@naver.com>",
+    "main": "lolbot-discord.js",
+    "scripts": {
+      "start": "node lolbot-discord.js"
+    },
+    "dependencies": {
+      "discord.js": "12.3.1",
+      "request": "2.88.2",
+      "urlencode": "1.1.0",
+      "express": "4.17.1"
+    }
+  }
+  
