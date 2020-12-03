@@ -191,3 +191,38 @@ function elapsedTimeFormatter(ctime){
 // console.log(nameObj)
 
 // console.log(nameObj.탑)
+
+
+const arr1 = [ [ '브랜드', 1 ], [ '모데카이저', 1 ], [ '자이라', 1 ] ]
+const arr2 = [ [ '판테온', 1 ], [ '진', 1 ] ]
+const arr3 = [
+  [ '노틸러스', 1 ], [ '르블랑', 1 ],
+  [ '피즈', 2 ],     [ '탈리야', 5 ],
+  [ '조이', 1 ],     [ '럼블', 1 ],
+  [ '코르키', 1 ],   [ '바루스', 2 ],
+  [ '에코', 4 ],     [ '진', 1 ],
+  [ '애쉬', 1 ],     [ '룰루', 1 ],
+  [ '트위치', 1 ]
+]
+
+function getMax(arr){
+    let max = -1
+    let name = ""
+    arr.forEach(item => {
+        if(item[1]>max){
+            max = item[1]
+            name = item[0]
+        }
+    })
+    return name
+}
+
+function getImage(name){
+    for (const [enName, obj] of Object.entries(champions.data)) {
+        if(obj.name === name){
+            return obj.image.full
+        }
+    }
+}
+
+console.log(getImage(getMax(arr3)))
