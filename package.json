@@ -4,6 +4,10 @@
     "description": "lolbot-discord.js on Docker",
     "author": "syenty <tog1993@naver.com>",
     "main": "lolbot-discord.js",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/syenty/lolbot-test.git"
+    },
     "scripts": {
       "start": "node lolbot-discord.js"
     },
