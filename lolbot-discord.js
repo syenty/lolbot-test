@@ -45,26 +45,38 @@ client.on("message", msg => {
 
         if(content === "테스트"){
 
-            // console.log()
-            // console.log(`msg.author : ${msg.author}`)
-            // console.log(`msg.author.id : ${msg.author.id}`)
-            // console.log(`msg.author.username : ${msg.author.username}`)
-            // console.log(`msg.author.tag : ${msg.author.tag}`)
+            console.log()
+            console.log(`msg.author : ${msg.author}`)
+            console.log(`msg.author.id : ${msg.author.id}`)
+            console.log(`msg.author.username : ${msg.author.username}`)
+            console.log(`msg.author.tag : ${msg.author.tag}`)
 
-            // console.log()
-            // console.log(`msg.guild : ${msg.guild}`)
-            // console.log(`msg.guild.id : ${msg.guild.id}`)
-            // console.log(`msg.channel.id : ${msg.channel.id}`)
-
-            // console.log()
-            // console.log(`msg.guild.owner : ${msg.guild.owner}`)
-            // console.log(`client.guilds.cache : ${client.guilds.cache}`)
-
-            // console.log(`msg.mentions.users : ${msg.mentions.users}`)
-            // console.log(`msg.mentions.users.first() : ${msg.mentions.users.first()}`)
-
-            // console.log(`msg.guild : ${msg.guild}`)
+            console.log()
+            console.log(`msg.guild : ${msg.guild}`)
+            console.log(`msg.guild.id : ${msg.guild.id}`)
             
+            // const list = client.guilds.cache.get("780075008684720148")
+            // list.members.cache.forEach(member => console.log(`member : ${member.user.username}`))
+
+            msg.guild.fetch().then(guild => {
+                console.log()
+                console.log("========== REAL TIME ==========")
+                console.log(`총 인원 : ${guild.approximateMemberCount}`)
+                console.log(`접속 인원 : ${guild.approximatePresenceCount}`)
+            })
+
+            console.log()
+            console.log(`========== MEMBER(${msg.guild.memberCount}) ==========`)
+            msg.guild.members.cache.each(member => {
+                console.log(`${member.user.username}(${member.nickname}, ${member.id}) : ${member.user.presence.status}`)
+            })
+
+            console.log()
+            console.log("========== ROLE ==========")
+            msg.guild.roles.cache.each(role => {
+                console.log(`${role.name}'s ID : ${role.id}`)
+            })
+
             return
             
         }else if(content === "명령어"){
