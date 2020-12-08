@@ -604,38 +604,48 @@ client.on("message", async msg => {
                                                                 console.log(res)
 
                                                                 // Set a new canvas to the dimensions of 700x250 pixels
-                                                                const canvas = Canvas.createCanvas(700, 350)
+                                                                const canvas = Canvas.createCanvas(700, 325)
 
                                                                 // ctx (context) will be used to modify a lot of the canvas
                                                                 const ctx = canvas.getContext('2d')
 
                                                                 // Since the image takes time to load, you should await it
                                                                 const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
+                                                                const profileicon = await Canvas.loadImage(`${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
 
                                                                 // This uses the canvas dimensions to stretch the image onto the entire canvas
                                                                 ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+                                                                ctx.drawImage(profileicon, 25, 25, 50, 50)
 
                                                                 // Select the font size and type from one of the natively available fonts
                                                                 ctx.font = '30px sans-serif'
                                                                 // Select the style that will be used to fill the text in
                                                                 ctx.fillStyle = '#ffffff'
+                                                                ctx.textBaseline = "middle"
+
                                                                 // Actually fill the text with a solid color
-                                                                ctx.fillText(`${name} (${convertUtil.getQueueType(item.queueType)}, ${convertUtil.secondTimeFormatter(item.gameDuration)}) `, 150, 50, 500)
+                                                                ctx.fillText(`${name} (${convertUtil.getQueueType(item.queueType)} ${convertUtil.secondTimeFormatter(item.gameDuration)}) `, 100, 50, 500)
+                                                                
+                                                                ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`), 25,100,50,50)
+                                                                ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell1Id)}`),100,100,50,50)
+                                                                ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell2Id)}`),175,100,50,50)
 
-                                                                if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),25,100,50,50)
-                                                                if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),100,100,50,50)
-                                                                if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),175,100,50,50)
-                                                                if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),250,100,50,50)
-                                                                if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),325,100,50,50)
-                                                                if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),400,100,50,50)
+                                                                if(item.perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,0,true)}`),25,175,50,50)
+                                                                if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),100,175,50,50)
+                                                                if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),175,175,50,50)
+                                                                if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),250,175,50,50)
+                                                                if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),325,175,50,50)
+                                                                if(item.perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,0,true)}`),400,175,50,50)
+                                                                if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),475,175,50,50)
+                                                                if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),550,175,50,50)
 
-                                                                if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,175,50,50)
-                                                                if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,175,50,50)
-                                                                if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,175,50,50)
-                                                                if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,175,50,50)
-                                                                if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,175,50,50)
-                                                                if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,175,50,50)
-                                                                if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,175,50,50)
+                                                                if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,250,50,50)
+                                                                if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,250,50,50)
+                                                                if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,250,50,50)
+                                                                if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,250,50,50)
+                                                                if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,250,50,50)
+                                                                if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,250,50,50)
+                                                                if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,250,50,50)
 
                                                                 // Use helpful Attachment class structure to process the file for you
                                                                 const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')

@@ -2,6 +2,7 @@ const champions = require("./json-lol/champions.json")
 const ConvertUtil = require('./lib/convertUtil')
 // const spectator = require("./json-lol/spectator.json")
 
+
 // match.json 다루기 예제
 // match.matches.forEach(item => {
 //     console.log(`gameId : ${item.gameId}`)
@@ -231,4 +232,6 @@ function elapsedTimeFormatter(ctime){
 
 const convertUtil = new ConvertUtil
 // console.log(convertUtil.elapsedTimeFormatter(1607348574988))
-console.log(convertUtil.secondTimeFormatter(1364))
+// console.log(convertUtil.secondTimeFormatter(1364))
+console.log(convertUtil.getSummonerSpellImage(4))
+
