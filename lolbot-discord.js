@@ -5,6 +5,8 @@ const client = new Discord.Client();
 const request = require('request')
 // npm install urlencode
 const urlencode = require('urlencode')
+// npm install canvas
+const Canvas = require('canvas');
 
 const keys = require("./keys.json")
 const autoMessage = require("./auto-message.json")
@@ -30,7 +32,7 @@ client.on("ready", () => {
     })
 })
 
-client.on("message", msg => {
+client.on("message", async msg => {
 
     if(msg.author.bot) return
     let content = msg.content
@@ -45,19 +47,21 @@ client.on("message", msg => {
 
         if(content === "테스트"){
 
+            msg.channel.send()
+
             console.log()
-            console.log(`msg.author : ${msg.author}`)
-            console.log(`msg.author.id : ${msg.author.id}`)
-            console.log(`msg.author.username : ${msg.author.username}`)
-            console.log(`msg.author.tag : ${msg.author.tag}`)
+            console.log(`코드 : ${msg.author}`)
+            console.log(`아이디 : ${msg.author.id}`)
+            console.log(`이름 : ${msg.author.username}`)
+            console.log(`별명 : ${msg.member.nickname}`)
+            console.log(`태그 : ${msg.author.tag}`)
+            console.log(`상태 : ${msg.author.presence.status}`)
+            console.log(`구별자 : ${msg.author.discriminator}`)
 
             console.log()
             console.log(`msg.guild : ${msg.guild}`)
             console.log(`msg.guild.id : ${msg.guild.id}`)
             
-            // const list = client.guilds.cache.get("780075008684720148")
-            // list.members.cache.forEach(member => console.log(`member : ${member.user.username}`))
-
             msg.guild.fetch().then(guild => {
                 console.log()
                 console.log("========== REAL TIME ==========")
@@ -72,13 +76,70 @@ client.on("message", msg => {
             })
 
             console.log()
+            console.log(`========== CHANNEL ==========`)
+
+            msg.guild.channels.cache.each(channel => {
+                console.log(`${channel} : ${channel.name} / ${channel.id} / ${channel.type}`)
+                channel.members.each(member => {
+                    console.log(`    ${channel.name}(${channel.type}) : ${member.user.username} (${member.id})`)
+                })
+            })
+
+            // '780075008684720149' => [CategoryChannel],
+            // '780075008684720150' => [CategoryChannel],
+            // '780075008684720151' => [TextChannel],
+            // '780075008684720153' => [VoiceChannel]
+
+            // for (const [channelID, channel] of channels) {
+            //     for (const [memberID, member] of channel.members) {
+            //         member.setVoiceChannel('497910775512563742')
+            //         .then(() => console.log(`Moved ${member.user.tag}.`))
+            //         .catch(console.error);
+            //     }
+            // }
+
+            // const list = client.guilds.cache.get("780075008684720148")
+            // list.members.cache.forEach(member => console.log(`member : ${member.user.username}`))
+
+            console.log()
             console.log("========== ROLE ==========")
             msg.guild.roles.cache.each(role => {
                 console.log(`${role.name}'s ID : ${role.id}`)
+                role.members.each(member => {
+                    console.log(`    ${member.user.username}(${member.id})`)
+                })
             })
 
             return
             
+        }else if(content === "상태"){
+
+            console.log()
+            console.log(`코드 : ${msg.author}`)
+            console.log(`아이디 : ${msg.author.id}`)
+            console.log(`이름 : ${msg.author.username}`)
+            console.log(`별명 : ${msg.member.nickname}`)
+            console.log(`태그 : ${msg.author.tag}`)
+            console.log(`상태 : ${msg.author.presence.status}`)
+
+            discordEmbed = new Discord.MessageEmbed()
+                .setAuthor(`${msg.author.username}`)
+                .setDescription(`현재 ${msg.author.presence.status}`)
+                .setThumbnail(msg.author.displayAvatarURL())
+                .addField("별명", `${msg.member.nickname}`, false)
+                .addField("태그", `${msg.author.tag}`, false)
+
+            msg.member.roles.cache.each(role => {
+                discordEmbed.addField(`역할 (${role.name})`,role.id, false)
+            })
+
+            msg.author.presence.activities.forEach(activity => {
+                discordEmbed.addField(`행동 (${activity.name} / ${activity.applicationID})`, `${activity.type} / ${activity.state}`, false)
+            })
+
+            msg.channel.send(discordEmbed)
+            return
+
         }else if(content === "명령어"){
             // 명령어 안내
             tmpMsg += "소환사명, 챔피언명은 띄어쓰기 없이 입력해주세요.\n"
@@ -280,16 +341,23 @@ client.on("message", msg => {
 
                             })
 
-                        }else if(content[2] === "전적"){
+                        }else if(content[2] === "전적" || content[2] === "최근"){
 
                             console.log(content)
+                            let endIndex
+
+                            if(content[2] === "전적"){
+                                endIndex = 20
+                            }else{
+                                endIndex = 1
+                            }
 
                             let requestUrl
 
                             if(content.length === 3){
                                 // 전적만 입력시
 
-                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
+                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?endIndex=${endIndex}&beginIndex=0&api_key=${keys.riotAPI}`
                             }else if(content.length === 4){
                                 // 챔피언, 게임분류 입력시
 
@@ -301,10 +369,9 @@ client.on("message", msg => {
                                         console.log(autoMessage["bad-input"])
 
                                         // msg.author.send(autoMessage["bad-input"])
-                                        // return msg.reply(autoMessage["bad-input"])
-                                        msg.reply(autoMessage["bad-input"])
+                                        return msg.reply(autoMessage["bad-input"])
                                     }
-                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?queue=${queueId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
+                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?queue=${queueId}&endIndex=${endIndex}&beginIndex=0&api_key=${keys.riotAPI}`
 
                                 }else{
                                     const championId = convertUtil.getChampionId(content[3])
@@ -313,10 +380,9 @@ client.on("message", msg => {
                                         console.log(autoMessage["bad-input"])
 
                                         // msg.author.send(autoMessage["bad-input"])
-                                        // return msg.reply(autoMessage["bad-input"])
-                                        msg.reply(autoMessage["bad-input"])
+                                        return msg.reply(autoMessage["bad-input"])
                                     }
-                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
+                                    requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&endIndex=${endIndex}&beginIndex=0&api_key=${keys.riotAPI}`
                                 }
 
                             }else if(content.length === 5){
@@ -339,7 +405,7 @@ client.on("message", msg => {
                                     // msg.author.send(autoMessage["bad-input"])
                                     return msg.reply(autoMessage["bad-input"])
                                 }
-                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&queue=${queueId}&endIndex=20&beginIndex=0&api_key=${keys.riotAPI}`
+                                requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&queue=${queueId}&endIndex=${endIndex}&beginIndex=0&api_key=${keys.riotAPI}`
                             }else{
                                 console.log("전적 => " + autoMessage["bad-input"])
 
@@ -435,6 +501,33 @@ client.on("message", msg => {
                                                                         objArr[objIdx].damageInTeam+=convertUtil.getDealtRank(matchDetail,participantId,false)
                                                                         objArr[objIdx].damageInAll+=convertUtil.getDealtRank(matchDetail,participantId,true)
 
+
+                                                                        if(content[2] === "최근"){
+
+                                                                            objArr[objIdx].gameDuration = matchDetail.gameDuration
+                                                                            objArr[objIdx].spell1Id = item.spell1Id
+                                                                            objArr[objIdx].spell2Id = item.spell2Id
+                                                                            objArr[objIdx].item0 = stats.item0
+                                                                            objArr[objIdx].item1 = stats.item1
+                                                                            objArr[objIdx].item2 = stats.item2
+                                                                            objArr[objIdx].item3 = stats.item3
+                                                                            objArr[objIdx].item4 = stats.item4
+                                                                            objArr[objIdx].item5 = stats.item5
+                                                                            objArr[objIdx].item6 = stats.item6
+                                                                            objArr[objIdx].perkPrimaryStyle = stats.perkPrimaryStyle
+                                                                            objArr[objIdx].perkSubStyle = stats.perkSubStyle
+                                                                            objArr[objIdx].perk0 = stats.perk0
+                                                                            objArr[objIdx].perk1 = stats.perk1
+                                                                            objArr[objIdx].perk2 = stats.perk2
+                                                                            objArr[objIdx].perk3 = stats.perk3
+                                                                            objArr[objIdx].perk4 = stats.perk4
+                                                                            objArr[objIdx].perk5 = stats.perk5
+                                                                            objArr[objIdx].statPerk0 = stats.statPerk0
+                                                                            objArr[objIdx].statPerk1 = stats.statPerk1
+                                                                            objArr[objIdx].statPerk2 = stats.statPerk2
+                                                                            
+                                                                        }
+
                                                                     }
 
                                                                 }
@@ -452,7 +545,7 @@ client.on("message", msg => {
                                                     //console.log(objArr)
                                                     let iconFlag = true
 
-                                                    objArr.forEach(item => {
+                                                    objArr.forEach(async item => {
                                                         if(item.cnt > 0){
 
                                                             // tmpMsg += `${convertUtil.getQueueType(item.queueType)}\n`
@@ -478,32 +571,80 @@ client.on("message", msg => {
                                                             // tmpMsg += `평균 딜량 순위 : 팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등\n`
                                                             // tmpMsg += '\n'
 
+                                                            if(content[2] === "전적"){
 
+                                                                discordEmbed = new Discord.MessageEmbed()
 
-                                                            discordEmbed = new Discord.MessageEmbed()
+                                                                if(iconFlag){
+                                                                    discordEmbed.setAuthor(name, `${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
+                                                                    iconFlag = false
+                                                                }
+    
+                                                                discordEmbed
+                                                                .setTitle(`${convertUtil.getQueueType(item.queueType)}`)
+                                                                .setDescription(`${item.win}승 ${item.losses}패 (${Math.floor(100*item.win/(item.win+item.losses))}%)`)
+                                                                .setThumbnail(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`)
+                                                                .addField(`K/D/A`,
+                                                                          `${item.kill}/${item.death}/${item.assist} (${((item.kill+item.assist)/(item.death === 0 ? 1/1.2 : item.death)).toFixed(2)})`,
+                                                                          false)
+                                                                .addField(`평균 딜량 순위`,
+                                                                          `팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등`,
+                                                                          false)
+    
+                                                                Object.entries(res).forEach(item => {
+                                                                    discordEmbed.addField(item[0],item[1],true)    
+                                                                })
+                                                                
+                                                                msg.channel.send(discordEmbed)
+                                                                // msg.reply(discordEmbed)
 
-                                                            if(iconFlag){
-                                                                discordEmbed.setAuthor(name, `${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
-                                                                iconFlag = false
+                                                            }else if(content[2] === "최근"){
+
+                                                                console.log(item)
+                                                                console.log(res)
+
+                                                                // Set a new canvas to the dimensions of 700x250 pixels
+                                                                const canvas = Canvas.createCanvas(700, 350)
+
+                                                                // ctx (context) will be used to modify a lot of the canvas
+                                                                const ctx = canvas.getContext('2d')
+
+                                                                // Since the image takes time to load, you should await it
+                                                                const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
+
+                                                                // This uses the canvas dimensions to stretch the image onto the entire canvas
+                                                                ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+
+                                                                // Select the font size and type from one of the natively available fonts
+                                                                ctx.font = '30px sans-serif'
+                                                                // Select the style that will be used to fill the text in
+                                                                ctx.fillStyle = '#ffffff'
+                                                                // Actually fill the text with a solid color
+                                                                ctx.fillText(`${name} (${convertUtil.getQueueType(item.queueType)}, ${convertUtil.secondTimeFormatter(item.gameDuration)}) `, 150, 50, 500)
+
+                                                                if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),25,100,50,50)
+                                                                if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),100,100,50,50)
+                                                                if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),175,100,50,50)
+                                                                if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),250,100,50,50)
+                                                                if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),325,100,50,50)
+                                                                if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),400,100,50,50)
+
+                                                                if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,175,50,50)
+                                                                if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,175,50,50)
+                                                                if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,175,50,50)
+                                                                if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,175,50,50)
+                                                                if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,175,50,50)
+                                                                if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,175,50,50)
+                                                                if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,175,50,50)
+
+                                                                // Use helpful Attachment class structure to process the file for you
+                                                                const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
+
+                                                                msg.channel.send(attachment)
+
                                                             }
 
-                                                            discordEmbed
-                                                            .setTitle(`${convertUtil.getQueueType(item.queueType)}`)
-                                                            .setDescription(`${item.win}승 ${item.losses}패 (${Math.floor(100*item.win/(item.win+item.losses))}%)`)
-                                                            .setThumbnail(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`)
-                                                            .addField(`K/D/A`,
-                                                                      `${item.kill}/${item.death}/${item.assist} (${((item.kill+item.assist)/(item.death === 0 ? 1/1.2 : item.death)).toFixed(2)})`,
-                                                                      false)
-                                                            .addField(`평균 딜량 순위`,
-                                                                      `팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등`,
-                                                                      false)
-
-                                                            Object.entries(res).forEach(item => {
-                                                                discordEmbed.addField(item[0],item[1],true)    
-                                                            })
                                                             
-                                                            msg.channel.send(discordEmbed)
-                                                            // msg.reply(discordEmbed)
 
                                                         }
                                                     })

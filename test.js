@@ -1,4 +1,5 @@
 const champions = require("./json-lol/champions.json")
+const ConvertUtil = require('./lib/convertUtil')
 // const spectator = require("./json-lol/spectator.json")
 
 // match.json 다루기 예제
@@ -227,3 +228,7 @@ function elapsedTimeFormatter(ctime){
 // }
 
 // console.log(getImage(getMax(arr3)))
+
+const convertUtil = new ConvertUtil
+// console.log(convertUtil.elapsedTimeFormatter(1607348574988))
+console.log(convertUtil.secondTimeFormatter(1364))

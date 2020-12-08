@@ -1,21 +1,21 @@
 {
-    "name": "lolbot_discord_app",
-    "version": "1.0.0",
-    "description": "lolbot-discord.js on Docker",
-    "author": "syenty <tog1993@naver.com>",
-    "main": "lolbot-discord.js",
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/syenty/lolbot-test.git"
-    },
-    "scripts": {
-      "start": "node lolbot-discord.js"
-    },
-    "dependencies": {
-      "discord.js": "12.3.1",
-      "request": "2.88.2",
-      "urlencode": "1.1.0",
-      "express": "4.17.1"
-    }
+  "name": "lolbot_discord_app",
+  "version": "1.0.0",
+  "description": "lolbot-discord.js on Docker",
+  "author": "syenty <tog1993@naver.com>",
+  "main": "lolbot-discord.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syenty/lolbot-test.git"
+  },
+  "scripts": {
+    "start": "node lolbot-discord.js"
+  },
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "discord.js": "^12.3.1",
+    "express": "^4.17.1",
+    "request": "^2.88.2",
+    "urlencode": "^1.1.0"
   }
-  
+}

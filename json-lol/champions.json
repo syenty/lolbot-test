@@ -1,10 +1,10 @@
 {
     "type": "champion",
     "format": "standAloneComplex",
-    "version": "10.20.1",
+    "version": "10.24.1",
     "data": {
         "Aatrox": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Aatrox",
             "key": "266",
             "name": "아트록스",
@@ -54,7 +54,7 @@
             }
         },
         "Ahri": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ahri",
             "key": "103",
             "name": "아리",
@@ -104,7 +104,7 @@
             }
         },
         "Akali": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Akali",
             "key": "84",
             "name": "아칼리",
@@ -153,7 +153,7 @@
             }
         },
         "Alistar": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Alistar",
             "key": "12",
             "name": "알리스타",
@@ -203,7 +203,7 @@
             }
         },
         "Amumu": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Amumu",
             "key": "32",
             "name": "아무무",
@@ -230,12 +230,12 @@
             ],
             "partype": "마나",
             "stats": {
-                "hp": 613.12,
-                "hpperlevel": 84,
-                "mp": 287.2,
-                "mpperlevel": 40,
+                "hp": 615,
+                "hpperlevel": 80,
+                "mp": 285,
+                "mpperlevel": 60,
                 "movespeed": 335,
-                "armor": 33,
+                "armor": 30,
                 "armorperlevel": 3.8,
                 "spellblock": 32.1,
                 "spellblockperlevel": 1.25,
@@ -253,7 +253,7 @@
             }
         },
         "Anivia": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Anivia",
             "key": "34",
             "name": "애니비아",
@@ -283,7 +283,7 @@
                 "hp": 480,
                 "hpperlevel": 82,
                 "mp": 495,
-                "mpperlevel": 25,
+                "mpperlevel": 45,
                 "movespeed": 325,
                 "armor": 21.22,
                 "armorperlevel": 4,
@@ -303,7 +303,7 @@
             }
         },
         "Annie": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Annie",
             "key": "1",
             "name": "애니",
@@ -352,7 +352,7 @@
             }
         },
         "Aphelios": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Aphelios",
             "key": "523",
             "name": "아펠리오스",
@@ -401,7 +401,7 @@
             }
         },
         "Ashe": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ashe",
             "key": "22",
             "name": "애쉬",
@@ -451,7 +451,7 @@
             }
         },
         "AurelionSol": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "AurelionSol",
             "key": "136",
             "name": "아우렐리온 솔",
@@ -500,7 +500,7 @@
             }
         },
         "Azir": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Azir",
             "key": "268",
             "name": "아지르",
@@ -550,7 +550,7 @@
             }
         },
         "Bard": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Bard",
             "key": "432",
             "name": "바드",
@@ -600,7 +600,7 @@
             }
         },
         "Blitzcrank": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Blitzcrank",
             "key": "53",
             "name": "블리츠크랭크",
@@ -650,7 +650,7 @@
             }
         },
         "Brand": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Brand",
             "key": "63",
             "name": "브랜드",
@@ -699,7 +699,7 @@
             }
         },
         "Braum": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Braum",
             "key": "201",
             "name": "브라움",
@@ -749,7 +749,7 @@
             }
         },
         "Caitlyn": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Caitlyn",
             "key": "51",
             "name": "케이틀린",
@@ -798,7 +798,7 @@
             }
         },
         "Camille": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Camille",
             "key": "164",
             "name": "카밀",
@@ -828,7 +828,7 @@
                 "hp": 575.6,
                 "hpperlevel": 85,
                 "mp": 338.8,
-                "mpperlevel": 32,
+                "mpperlevel": 52,
                 "movespeed": 340,
                 "armor": 35,
                 "armorperlevel": 3.8,
@@ -848,7 +848,7 @@
             }
         },
         "Cassiopeia": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Cassiopeia",
             "key": "69",
             "name": "카시오페아",
@@ -877,7 +877,7 @@
                 "hp": 560,
                 "hpperlevel": 90,
                 "mp": 350,
-                "mpperlevel": 40,
+                "mpperlevel": 60,
                 "movespeed": 328,
                 "armor": 18,
                 "armorperlevel": 3.5,
@@ -897,7 +897,7 @@
             }
         },
         "Chogath": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Chogath",
             "key": "31",
             "name": "초가스",
@@ -926,8 +926,8 @@
             "stats": {
                 "hp": 574.4,
                 "hpperlevel": 80,
-                "mp": 272.2,
-                "mpperlevel": 40,
+                "mp": 270,
+                "mpperlevel": 60,
                 "movespeed": 345,
                 "armor": 38,
                 "armorperlevel": 3.5,
@@ -936,7 +936,7 @@
                 "attackrange": 125,
                 "hpregen": 9,
                 "hpregenperlevel": 0.85,
-                "mpregen": 7.206,
+                "mpregen": 7.2,
                 "mpregenperlevel": 0.45,
                 "crit": 0,
                 "critperlevel": 0,
@@ -947,7 +947,7 @@
             }
         },
         "Corki": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Corki",
             "key": "42",
             "name": "코르키",
@@ -975,8 +975,8 @@
             "stats": {
                 "hp": 518,
                 "hpperlevel": 87,
-                "mp": 350.16,
-                "mpperlevel": 34,
+                "mp": 350,
+                "mpperlevel": 54,
                 "movespeed": 325,
                 "armor": 28,
                 "armorperlevel": 3.5,
@@ -996,7 +996,7 @@
             }
         },
         "Darius": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Darius",
             "key": "122",
             "name": "다리우스",
@@ -1026,7 +1026,7 @@
                 "hp": 582.24,
                 "hpperlevel": 100,
                 "mp": 263,
-                "mpperlevel": 37.5,
+                "mpperlevel": 57.5,
                 "movespeed": 340,
                 "armor": 39,
                 "armorperlevel": 4,
@@ -1046,7 +1046,7 @@
             }
         },
         "Diana": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Diana",
             "key": "131",
             "name": "다이애나",
@@ -1096,7 +1096,7 @@
             }
         },
         "Draven": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Draven",
             "key": "119",
             "name": "드레이븐",
@@ -1145,7 +1145,7 @@
             }
         },
         "DrMundo": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "DrMundo",
             "key": "36",
             "name": "문도 박사",
@@ -1195,7 +1195,7 @@
             }
         },
         "Ekko": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ekko",
             "key": "245",
             "name": "에코",
@@ -1225,7 +1225,7 @@
                 "hp": 585,
                 "hpperlevel": 85,
                 "mp": 280,
-                "mpperlevel": 50,
+                "mpperlevel": 70,
                 "movespeed": 340,
                 "armor": 32,
                 "armorperlevel": 3,
@@ -1245,7 +1245,7 @@
             }
         },
         "Elise": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Elise",
             "key": "60",
             "name": "엘리스",
@@ -1295,7 +1295,7 @@
             }
         },
         "Evelynn": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Evelynn",
             "key": "28",
             "name": "이블린",
@@ -1324,7 +1324,7 @@
             "stats": {
                 "hp": 572,
                 "hpperlevel": 84,
-                "mp": 315.6,
+                "mp": 315,
                 "mpperlevel": 42,
                 "movespeed": 335,
                 "armor": 37,
@@ -1334,7 +1334,7 @@
                 "attackrange": 125,
                 "hpregen": 8.5,
                 "hpregenperlevel": 0.75,
-                "mpregen": 8.108,
+                "mpregen": 8.11,
                 "mpregenperlevel": 0.6,
                 "crit": 0,
                 "critperlevel": 0,
@@ -1345,7 +1345,7 @@
             }
         },
         "Ezreal": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ezreal",
             "key": "81",
             "name": "이즈리얼",
@@ -1375,7 +1375,7 @@
                 "hp": 530,
                 "hpperlevel": 88,
                 "mp": 375,
-                "mpperlevel": 50,
+                "mpperlevel": 70,
                 "movespeed": 325,
                 "armor": 22,
                 "armorperlevel": 3.5,
@@ -1395,7 +1395,7 @@
             }
         },
         "Fiddlesticks": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Fiddlesticks",
             "key": "9",
             "name": "피들스틱",
@@ -1445,7 +1445,7 @@
             }
         },
         "Fiora": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Fiora",
             "key": "114",
             "name": "피오라",
@@ -1475,7 +1475,7 @@
                 "hp": 550,
                 "hpperlevel": 85,
                 "mp": 300,
-                "mpperlevel": 40,
+                "mpperlevel": 60,
                 "movespeed": 345,
                 "armor": 33,
                 "armorperlevel": 3.5,
@@ -1495,7 +1495,7 @@
             }
         },
         "Fizz": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Fizz",
             "key": "105",
             "name": "피즈",
@@ -1525,7 +1525,7 @@
                 "hp": 570,
                 "hpperlevel": 98,
                 "mp": 317.2,
-                "mpperlevel": 37,
+                "mpperlevel": 57,
                 "movespeed": 335,
                 "armor": 22.412,
                 "armorperlevel": 3.4,
@@ -1545,7 +1545,7 @@
             }
         },
         "Galio": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Galio",
             "key": "3",
             "name": "갈리오",
@@ -1595,7 +1595,7 @@
             }
         },
         "Gangplank": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Gangplank",
             "key": "41",
             "name": "갱플랭크",
@@ -1623,8 +1623,8 @@
             "stats": {
                 "hp": 540,
                 "hpperlevel": 82,
-                "mp": 282,
-                "mpperlevel": 40,
+                "mp": 280,
+                "mpperlevel": 60,
                 "movespeed": 345,
                 "armor": 35,
                 "armorperlevel": 3,
@@ -1644,7 +1644,7 @@
             }
         },
         "Garen": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Garen",
             "key": "86",
             "name": "가렌",
@@ -1694,7 +1694,7 @@
             }
         },
         "Gnar": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Gnar",
             "key": "150",
             "name": "나르",
@@ -1744,7 +1744,7 @@
             }
         },
         "Gragas": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Gragas",
             "key": "79",
             "name": "그라가스",
@@ -1794,7 +1794,7 @@
             }
         },
         "Graves": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Graves",
             "key": "104",
             "name": "그레이브즈",
@@ -1843,7 +1843,7 @@
             }
         },
         "Hecarim": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Hecarim",
             "key": "120",
             "name": "헤카림",
@@ -1873,7 +1873,7 @@
                 "hp": 580,
                 "hpperlevel": 90,
                 "mp": 277.2,
-                "mpperlevel": 40,
+                "mpperlevel": 60,
                 "movespeed": 345,
                 "armor": 36,
                 "armorperlevel": 4,
@@ -1893,7 +1893,7 @@
             }
         },
         "Heimerdinger": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Heimerdinger",
             "key": "74",
             "name": "하이머딩거",
@@ -1943,7 +1943,7 @@
             }
         },
         "Illaoi": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Illaoi",
             "key": "420",
             "name": "일라오이",
@@ -1993,7 +1993,7 @@
             }
         },
         "Irelia": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Irelia",
             "key": "39",
             "name": "이렐리아",
@@ -2023,7 +2023,7 @@
                 "hp": 580,
                 "hpperlevel": 95,
                 "mp": 350,
-                "mpperlevel": 30,
+                "mpperlevel": 50,
                 "movespeed": 335,
                 "armor": 36,
                 "armorperlevel": 3,
@@ -2043,7 +2043,7 @@
             }
         },
         "Ivern": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ivern",
             "key": "427",
             "name": "아이번",
@@ -2093,7 +2093,7 @@
             }
         },
         "Janna": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Janna",
             "key": "40",
             "name": "잔나",
@@ -2143,7 +2143,7 @@
             }
         },
         "JarvanIV": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "JarvanIV",
             "key": "59",
             "name": "자르반 4세",
@@ -2193,7 +2193,7 @@
             }
         },
         "Jax": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Jax",
             "key": "24",
             "name": "잭스",
@@ -2223,7 +2223,7 @@
                 "hp": 592.8,
                 "hpperlevel": 85,
                 "mp": 338.8,
-                "mpperlevel": 32,
+                "mpperlevel": 52,
                 "movespeed": 350,
                 "armor": 36,
                 "armorperlevel": 3,
@@ -2243,7 +2243,7 @@
             }
         },
         "Jayce": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Jayce",
             "key": "126",
             "name": "제이스",
@@ -2293,7 +2293,7 @@
             }
         },
         "Jhin": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Jhin",
             "key": "202",
             "name": "진",
@@ -2343,7 +2343,7 @@
             }
         },
         "Jinx": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Jinx",
             "key": "222",
             "name": "징크스",
@@ -2392,7 +2392,7 @@
             }
         },
         "Kaisa": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kaisa",
             "key": "145",
             "name": "카이사",
@@ -2441,7 +2441,7 @@
             }
         },
         "Kalista": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kalista",
             "key": "429",
             "name": "칼리스타",
@@ -2490,7 +2490,7 @@
             }
         },
         "Karma": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Karma",
             "key": "43",
             "name": "카르마",
@@ -2540,7 +2540,7 @@
             }
         },
         "Karthus": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Karthus",
             "key": "30",
             "name": "카서스",
@@ -2589,7 +2589,7 @@
             }
         },
         "Kassadin": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kassadin",
             "key": "38",
             "name": "카사딘",
@@ -2617,9 +2617,9 @@
             "partype": "마나",
             "stats": {
                 "hp": 576,
-                "hpperlevel": 90,
-                "mp": 397.6,
-                "mpperlevel": 67,
+                "hpperlevel": 105,
+                "mp": 400,
+                "mpperlevel": 87,
                 "movespeed": 335,
                 "armor": 19,
                 "armorperlevel": 2.8,
@@ -2639,7 +2639,7 @@
             }
         },
         "Katarina": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Katarina",
             "key": "55",
             "name": "카타리나",
@@ -2689,7 +2689,7 @@
             }
         },
         "Kayle": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kayle",
             "key": "10",
             "name": "케일",
@@ -2739,7 +2739,7 @@
             }
         },
         "Kayn": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kayn",
             "key": "141",
             "name": "케인",
@@ -2789,7 +2789,7 @@
             }
         },
         "Kennen": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kennen",
             "key": "85",
             "name": "케넨",
@@ -2839,7 +2839,7 @@
             }
         },
         "Khazix": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Khazix",
             "key": "121",
             "name": "카직스",
@@ -2888,7 +2888,7 @@
             }
         },
         "Kindred": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kindred",
             "key": "203",
             "name": "킨드레드",
@@ -2937,7 +2937,7 @@
             }
         },
         "Kled": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Kled",
             "key": "240",
             "name": "클레드",
@@ -2987,7 +2987,7 @@
             }
         },
         "KogMaw": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "KogMaw",
             "key": "96",
             "name": "코그모",
@@ -3037,7 +3037,7 @@
             }
         },
         "Leblanc": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Leblanc",
             "key": "7",
             "name": "르블랑",
@@ -3087,7 +3087,7 @@
             }
         },
         "LeeSin": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "LeeSin",
             "key": "64",
             "name": "리 신",
@@ -3131,13 +3131,13 @@
                 "crit": 0,
                 "critperlevel": 0,
                 "attackdamage": 70,
-                "attackdamageperlevel": 3.2,
+                "attackdamageperlevel": 3.7,
                 "attackspeedperlevel": 3,
                 "attackspeed": 0.651
             }
         },
         "Leona": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Leona",
             "key": "89",
             "name": "레오나",
@@ -3187,7 +3187,7 @@
             }
         },
         "Lillia": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Lillia",
             "key": "876",
             "name": "릴리아",
@@ -3237,7 +3237,7 @@
             }
         },
         "Lissandra": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Lissandra",
             "key": "127",
             "name": "리산드라",
@@ -3286,7 +3286,7 @@
             }
         },
         "Lucian": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Lucian",
             "key": "236",
             "name": "루시안",
@@ -3335,7 +3335,7 @@
             }
         },
         "Lulu": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Lulu",
             "key": "117",
             "name": "룰루",
@@ -3385,7 +3385,7 @@
             }
         },
         "Lux": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Lux",
             "key": "99",
             "name": "럭스",
@@ -3435,7 +3435,7 @@
             }
         },
         "Malphite": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Malphite",
             "key": "54",
             "name": "말파이트",
@@ -3462,10 +3462,10 @@
             ],
             "partype": "마나",
             "stats": {
-                "hp": 574.2,
+                "hp": 575,
                 "hpperlevel": 90,
-                "mp": 282.2,
-                "mpperlevel": 40,
+                "mp": 280,
+                "mpperlevel": 60,
                 "movespeed": 335,
                 "armor": 37,
                 "armorperlevel": 3.75,
@@ -3485,7 +3485,7 @@
             }
         },
         "Malzahar": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Malzahar",
             "key": "90",
             "name": "말자하",
@@ -3535,7 +3535,7 @@
             }
         },
         "Maokai": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Maokai",
             "key": "57",
             "name": "마오카이",
@@ -3585,7 +3585,7 @@
             }
         },
         "MasterYi": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "MasterYi",
             "key": "11",
             "name": "마스터 이",
@@ -3635,7 +3635,7 @@
             }
         },
         "MissFortune": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "MissFortune",
             "key": "21",
             "name": "미스 포츈",
@@ -3684,7 +3684,7 @@
             }
         },
         "MonkeyKing": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "MonkeyKing",
             "key": "62",
             "name": "오공",
@@ -3714,7 +3714,7 @@
                 "hp": 540,
                 "hpperlevel": 85,
                 "mp": 300,
-                "mpperlevel": 45,
+                "mpperlevel": 65,
                 "movespeed": 345,
                 "armor": 31,
                 "armorperlevel": 3.5,
@@ -3734,7 +3734,7 @@
             }
         },
         "Mordekaiser": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Mordekaiser",
             "key": "82",
             "name": "모데카이저",
@@ -3783,7 +3783,7 @@
             }
         },
         "Morgana": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Morgana",
             "key": "25",
             "name": "모르가나",
@@ -3833,7 +3833,7 @@
             }
         },
         "Nami": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Nami",
             "key": "267",
             "name": "나미",
@@ -3883,7 +3883,7 @@
             }
         },
         "Nasus": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Nasus",
             "key": "75",
             "name": "나서스",
@@ -3913,7 +3913,7 @@
                 "hp": 561.2,
                 "hpperlevel": 90,
                 "mp": 325.6,
-                "mpperlevel": 42,
+                "mpperlevel": 62,
                 "movespeed": 350,
                 "armor": 34,
                 "armorperlevel": 3.5,
@@ -3933,7 +3933,7 @@
             }
         },
         "Nautilus": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Nautilus",
             "key": "111",
             "name": "노틸러스",
@@ -3983,7 +3983,7 @@
             }
         },
         "Neeko": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Neeko",
             "key": "518",
             "name": "니코",
@@ -4033,7 +4033,7 @@
             }
         },
         "Nidalee": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Nidalee",
             "key": "76",
             "name": "니달리",
@@ -4062,7 +4062,7 @@
             "stats": {
                 "hp": 545,
                 "hpperlevel": 85,
-                "mp": 295.6,
+                "mp": 295,
                 "mpperlevel": 45,
                 "movespeed": 335,
                 "armor": 28,
@@ -4076,14 +4076,14 @@
                 "mpregenperlevel": 0.8,
                 "crit": 0,
                 "critperlevel": 0,
-                "attackdamage": 61,
+                "attackdamage": 58,
                 "attackdamageperlevel": 3.5,
                 "attackspeedperlevel": 3.22,
                 "attackspeed": 0.638
             }
         },
         "Nocturne": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Nocturne",
             "key": "56",
             "name": "녹턴",
@@ -4133,7 +4133,7 @@
             }
         },
         "Nunu": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Nunu",
             "key": "20",
             "name": "누누와 윌럼프",
@@ -4183,7 +4183,7 @@
             }
         },
         "Olaf": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Olaf",
             "key": "2",
             "name": "올라프",
@@ -4222,7 +4222,7 @@
                 "attackrange": 125,
                 "hpregen": 8.5,
                 "hpregenperlevel": 0.9,
-                "mpregen": 7.466,
+                "mpregen": 7.465,
                 "mpregenperlevel": 0.575,
                 "crit": 0,
                 "critperlevel": 0,
@@ -4233,7 +4233,7 @@
             }
         },
         "Orianna": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Orianna",
             "key": "61",
             "name": "오리아나",
@@ -4283,7 +4283,7 @@
             }
         },
         "Ornn": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ornn",
             "key": "516",
             "name": "오른",
@@ -4313,7 +4313,7 @@
                 "hp": 590,
                 "hpperlevel": 95,
                 "mp": 340.6,
-                "mpperlevel": 45,
+                "mpperlevel": 65,
                 "movespeed": 335,
                 "armor": 33,
                 "armorperlevel": 4,
@@ -4333,7 +4333,7 @@
             }
         },
         "Pantheon": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Pantheon",
             "key": "80",
             "name": "판테온",
@@ -4383,7 +4383,7 @@
             }
         },
         "Poppy": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Poppy",
             "key": "78",
             "name": "뽀삐",
@@ -4433,7 +4433,7 @@
             }
         },
         "Pyke": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Pyke",
             "key": "555",
             "name": "파이크",
@@ -4483,7 +4483,7 @@
             }
         },
         "Qiyana": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Qiyana",
             "key": "246",
             "name": "키아나",
@@ -4533,7 +4533,7 @@
             }
         },
         "Quinn": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Quinn",
             "key": "133",
             "name": "퀸",
@@ -4583,7 +4583,7 @@
             }
         },
         "Rakan": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Rakan",
             "key": "497",
             "name": "라칸",
@@ -4632,7 +4632,7 @@
             }
         },
         "Rammus": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Rammus",
             "key": "33",
             "name": "람머스",
@@ -4682,7 +4682,7 @@
             }
         },
         "RekSai": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "RekSai",
             "key": "421",
             "name": "렉사이",
@@ -4731,7 +4731,7 @@
             }
         },
         "Renekton": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Renekton",
             "key": "58",
             "name": "레넥톤",
@@ -4781,7 +4781,7 @@
             }
         },
         "Rengar": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Rengar",
             "key": "107",
             "name": "렝가",
@@ -4831,7 +4831,7 @@
             }
         },
         "Riven": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Riven",
             "key": "92",
             "name": "리븐",
@@ -4881,7 +4881,7 @@
             }
         },
         "Rumble": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Rumble",
             "key": "68",
             "name": "럼블",
@@ -4931,7 +4931,7 @@
             }
         },
         "Ryze": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ryze",
             "key": "13",
             "name": "라이즈",
@@ -4961,7 +4961,7 @@
                 "hp": 575,
                 "hpperlevel": 98,
                 "mp": 300,
-                "mpperlevel": 50,
+                "mpperlevel": 70,
                 "movespeed": 340,
                 "armor": 22,
                 "armorperlevel": 3,
@@ -4981,7 +4981,7 @@
             }
         },
         "Samira": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Samira",
             "key": "360",
             "name": "사미라",
@@ -5012,7 +5012,7 @@
                 "mp": 348.88,
                 "mpperlevel": 38,
                 "movespeed": 335,
-                "armor": 28,
+                "armor": 26,
                 "armorperlevel": 3,
                 "spellblock": 30,
                 "spellblockperlevel": 0.5,
@@ -5023,14 +5023,14 @@
                 "mpregenperlevel": 0.7,
                 "crit": 0,
                 "critperlevel": 0,
-                "attackdamage": 59,
+                "attackdamage": 57,
                 "attackdamageperlevel": 2.3,
                 "attackspeedperlevel": 3.3,
                 "attackspeed": 0.658
             }
         },
         "Sejuani": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Sejuani",
             "key": "113",
             "name": "세주아니",
@@ -5080,7 +5080,7 @@
             }
         },
         "Senna": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Senna",
             "key": "235",
             "name": "세나",
@@ -5129,8 +5129,58 @@
                 "attackspeed": 0.625
             }
         },
+        "Seraphine": {
+            "version": "10.24.1",
+            "id": "Seraphine",
+            "key": "147",
+            "name": "세라핀",
+            "title": "노래하는 별",
+            "blurb": "필트오버에서 태어나 자운 출신의 부모님을 둔 세라핀은 다른 이들의 영혼을 들을 수 있습니다. 세상이 세라핀에게 노래하면 세라핀은 노래로 화답합니다. 어린 시절 소리에 압도당했던 세라핀은 이제 소리를 끌어내어 영감을 얻고 혼돈을 교향곡으로 바꿉니다. 두 도시를 위해 공연하는 세라핀은 도시의 시민들이 혼자가 아니며 함께하면 더 강하다는 사실을 일깨워줍니다. 세라핀이 보기에 그들의 잠재력은 무한하니까요.",
+            "info": {
+                "attack": 0,
+                "defense": 0,
+                "magic": 0,
+                "difficulty": 0
+            },
+            "image": {
+                "full": "Seraphine.png",
+                "sprite": "champion3.png",
+                "group": "champion",
+                "x": 144,
+                "y": 48,
+                "w": 48,
+                "h": 48
+            },
+            "tags": [
+                "Mage",
+                "Support"
+            ],
+            "partype": "마나",
+            "stats": {
+                "hp": 500,
+                "hpperlevel": 80,
+                "mp": 440,
+                "mpperlevel": 40,
+                "movespeed": 325,
+                "armor": 19,
+                "armorperlevel": 3,
+                "spellblock": 30,
+                "spellblockperlevel": 0.5,
+                "attackrange": 525,
+                "hpregen": 6.5,
+                "hpregenperlevel": 0.6,
+                "mpregen": 8,
+                "mpregenperlevel": 1,
+                "crit": 0,
+                "critperlevel": 0,
+                "attackdamage": 55,
+                "attackdamageperlevel": 3,
+                "attackspeedperlevel": 1,
+                "attackspeed": 0.669
+            }
+        },
         "Sett": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Sett",
             "key": "875",
             "name": "세트",
@@ -5146,7 +5196,7 @@
                 "full": "Sett.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 144,
+                "x": 192,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -5180,7 +5230,7 @@
             }
         },
         "Shaco": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Shaco",
             "key": "35",
             "name": "샤코",
@@ -5196,7 +5246,7 @@
                 "full": "Shaco.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 192,
+                "x": 240,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -5229,7 +5279,7 @@
             }
         },
         "Shen": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Shen",
             "key": "98",
             "name": "쉔",
@@ -5245,7 +5295,7 @@
                 "full": "Shen.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 240,
+                "x": 288,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -5278,7 +5328,7 @@
             }
         },
         "Shyvana": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Shyvana",
             "key": "102",
             "name": "쉬바나",
@@ -5294,7 +5344,7 @@
                 "full": "Shyvana.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 288,
+                "x": 336,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -5328,7 +5378,7 @@
             }
         },
         "Singed": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Singed",
             "key": "27",
             "name": "신지드",
@@ -5344,7 +5394,7 @@
                 "full": "Singed.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 336,
+                "x": 384,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -5378,7 +5428,7 @@
             }
         },
         "Sion": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Sion",
             "key": "14",
             "name": "사이온",
@@ -5394,7 +5444,7 @@
                 "full": "Sion.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 384,
+                "x": 432,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -5428,7 +5478,7 @@
             }
         },
         "Sivir": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Sivir",
             "key": "15",
             "name": "시비르",
@@ -5444,8 +5494,8 @@
                 "full": "Sivir.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 432,
-                "y": 48,
+                "x": 0,
+                "y": 96,
                 "w": 48,
                 "h": 48
             },
@@ -5477,7 +5527,7 @@
             }
         },
         "Skarner": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Skarner",
             "key": "72",
             "name": "스카너",
@@ -5493,7 +5543,7 @@
                 "full": "Skarner.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 0,
+                "x": 48,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5507,7 +5557,7 @@
                 "hp": 601.28,
                 "hpperlevel": 90,
                 "mp": 320,
-                "mpperlevel": 40,
+                "mpperlevel": 60,
                 "movespeed": 335,
                 "armor": 38,
                 "armorperlevel": 3.8,
@@ -5516,7 +5566,7 @@
                 "attackrange": 125,
                 "hpregen": 9,
                 "hpregenperlevel": 0.85,
-                "mpregen": 7.206,
+                "mpregen": 7.2,
                 "mpregenperlevel": 0.45,
                 "crit": 0,
                 "critperlevel": 0,
@@ -5527,7 +5577,7 @@
             }
         },
         "Sona": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Sona",
             "key": "37",
             "name": "소나",
@@ -5543,7 +5593,7 @@
                 "full": "Sona.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 48,
+                "x": 96,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5577,7 +5627,7 @@
             }
         },
         "Soraka": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Soraka",
             "key": "16",
             "name": "소라카",
@@ -5593,7 +5643,7 @@
                 "full": "Soraka.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 96,
+                "x": 144,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5627,7 +5677,7 @@
             }
         },
         "Swain": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Swain",
             "key": "50",
             "name": "스웨인",
@@ -5643,7 +5693,7 @@
                 "full": "Swain.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 144,
+                "x": 192,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5677,7 +5727,7 @@
             }
         },
         "Sylas": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Sylas",
             "key": "517",
             "name": "사일러스",
@@ -5693,7 +5743,7 @@
                 "full": "Sylas.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 192,
+                "x": 240,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5707,7 +5757,7 @@
                 "hp": 525,
                 "hpperlevel": 115,
                 "mp": 280,
-                "mpperlevel": 50,
+                "mpperlevel": 70,
                 "movespeed": 340,
                 "armor": 27,
                 "armorperlevel": 4,
@@ -5727,7 +5777,7 @@
             }
         },
         "Syndra": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Syndra",
             "key": "134",
             "name": "신드라",
@@ -5743,7 +5793,7 @@
                 "full": "Syndra.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 240,
+                "x": 288,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5777,7 +5827,7 @@
             }
         },
         "TahmKench": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "TahmKench",
             "key": "223",
             "name": "탐 켄치",
@@ -5793,7 +5843,7 @@
                 "full": "TahmKench.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 288,
+                "x": 336,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5827,7 +5877,7 @@
             }
         },
         "Taliyah": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Taliyah",
             "key": "163",
             "name": "탈리야",
@@ -5843,7 +5893,7 @@
                 "full": "Taliyah.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 336,
+                "x": 384,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5877,7 +5927,7 @@
             }
         },
         "Talon": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Talon",
             "key": "91",
             "name": "탈론",
@@ -5893,7 +5943,7 @@
                 "full": "Talon.png",
                 "sprite": "champion3.png",
                 "group": "champion",
-                "x": 384,
+                "x": 432,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -5926,7 +5976,7 @@
             }
         },
         "Taric": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Taric",
             "key": "44",
             "name": "타릭",
@@ -5940,10 +5990,10 @@
             },
             "image": {
                 "full": "Taric.png",
-                "sprite": "champion3.png",
+                "sprite": "champion4.png",
                 "group": "champion",
-                "x": 432,
-                "y": 96,
+                "x": 0,
+                "y": 0,
                 "w": 48,
                 "h": 48
             },
@@ -5976,7 +6026,7 @@
             }
         },
         "Teemo": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Teemo",
             "key": "17",
             "name": "티모",
@@ -5992,7 +6042,7 @@
                 "full": "Teemo.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 0,
+                "x": 48,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6026,7 +6076,7 @@
             }
         },
         "Thresh": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Thresh",
             "key": "412",
             "name": "쓰레쉬",
@@ -6042,7 +6092,7 @@
                 "full": "Thresh.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 48,
+                "x": 96,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6076,7 +6126,7 @@
             }
         },
         "Tristana": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Tristana",
             "key": "18",
             "name": "트리스타나",
@@ -6092,7 +6142,7 @@
                 "full": "Tristana.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 96,
+                "x": 144,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6126,7 +6176,7 @@
             }
         },
         "Trundle": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Trundle",
             "key": "48",
             "name": "트런들",
@@ -6142,7 +6192,7 @@
                 "full": "Trundle.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 144,
+                "x": 192,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6176,7 +6226,7 @@
             }
         },
         "Tryndamere": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Tryndamere",
             "key": "23",
             "name": "트린다미어",
@@ -6192,7 +6242,7 @@
                 "full": "Tryndamere.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 192,
+                "x": 240,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6226,7 +6276,7 @@
             }
         },
         "TwistedFate": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "TwistedFate",
             "key": "4",
             "name": "트위스티드 페이트",
@@ -6242,7 +6292,7 @@
                 "full": "TwistedFate.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 240,
+                "x": 288,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6255,7 +6305,7 @@
                 "hp": 534,
                 "hpperlevel": 94,
                 "mp": 333,
-                "mpperlevel": 19,
+                "mpperlevel": 39,
                 "movespeed": 330,
                 "armor": 21,
                 "armorperlevel": 3.15,
@@ -6275,7 +6325,7 @@
             }
         },
         "Twitch": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Twitch",
             "key": "29",
             "name": "트위치",
@@ -6291,7 +6341,7 @@
                 "full": "Twitch.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 288,
+                "x": 336,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6325,7 +6375,7 @@
             }
         },
         "Udyr": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Udyr",
             "key": "77",
             "name": "우디르",
@@ -6341,7 +6391,7 @@
                 "full": "Udyr.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 336,
+                "x": 384,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6355,7 +6405,7 @@
                 "hp": 594,
                 "hpperlevel": 99,
                 "mp": 271,
-                "mpperlevel": 30,
+                "mpperlevel": 50,
                 "movespeed": 350,
                 "armor": 34,
                 "armorperlevel": 4,
@@ -6375,7 +6425,7 @@
             }
         },
         "Urgot": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Urgot",
             "key": "6",
             "name": "우르곳",
@@ -6391,7 +6441,7 @@
                 "full": "Urgot.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 384,
+                "x": 432,
                 "y": 0,
                 "w": 48,
                 "h": 48
@@ -6425,7 +6475,7 @@
             }
         },
         "Varus": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Varus",
             "key": "110",
             "name": "바루스",
@@ -6441,8 +6491,8 @@
                 "full": "Varus.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 432,
-                "y": 0,
+                "x": 0,
+                "y": 48,
                 "w": 48,
                 "h": 48
             },
@@ -6475,7 +6525,7 @@
             }
         },
         "Vayne": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Vayne",
             "key": "67",
             "name": "베인",
@@ -6491,7 +6541,7 @@
                 "full": "Vayne.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 0,
+                "x": 48,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6525,7 +6575,7 @@
             }
         },
         "Veigar": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Veigar",
             "key": "45",
             "name": "베이가",
@@ -6541,7 +6591,7 @@
                 "full": "Veigar.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 48,
+                "x": 96,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6574,7 +6624,7 @@
             }
         },
         "Velkoz": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Velkoz",
             "key": "161",
             "name": "벨코즈",
@@ -6590,7 +6640,7 @@
                 "full": "Velkoz.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 96,
+                "x": 144,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6623,7 +6673,7 @@
             }
         },
         "Vi": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Vi",
             "key": "254",
             "name": "바이",
@@ -6639,7 +6689,7 @@
                 "full": "Vi.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 144,
+                "x": 192,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6653,7 +6703,7 @@
                 "hp": 585,
                 "hpperlevel": 85,
                 "mp": 295,
-                "mpperlevel": 45,
+                "mpperlevel": 65,
                 "movespeed": 340,
                 "armor": 30,
                 "armorperlevel": 4,
@@ -6673,7 +6723,7 @@
             }
         },
         "Viktor": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Viktor",
             "key": "112",
             "name": "빅토르",
@@ -6689,7 +6739,7 @@
                 "full": "Viktor.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 192,
+                "x": 240,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6702,7 +6752,7 @@
                 "hp": 530,
                 "hpperlevel": 90,
                 "mp": 405,
-                "mpperlevel": 25,
+                "mpperlevel": 45,
                 "movespeed": 335,
                 "armor": 23,
                 "armorperlevel": 4,
@@ -6722,7 +6772,7 @@
             }
         },
         "Vladimir": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Vladimir",
             "key": "8",
             "name": "블라디미르",
@@ -6738,7 +6788,7 @@
                 "full": "Vladimir.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 240,
+                "x": 288,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6771,7 +6821,7 @@
             }
         },
         "Volibear": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Volibear",
             "key": "106",
             "name": "볼리베어",
@@ -6787,7 +6837,7 @@
                 "full": "Volibear.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 288,
+                "x": 336,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6801,7 +6851,7 @@
                 "hp": 580,
                 "hpperlevel": 90,
                 "mp": 350,
-                "mpperlevel": 50,
+                "mpperlevel": 70,
                 "movespeed": 340,
                 "armor": 31,
                 "armorperlevel": 4,
@@ -6821,7 +6871,7 @@
             }
         },
         "Warwick": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Warwick",
             "key": "19",
             "name": "워윅",
@@ -6837,7 +6887,7 @@
                 "full": "Warwick.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 336,
+                "x": 384,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6860,7 +6910,7 @@
                 "attackrange": 125,
                 "hpregen": 4,
                 "hpregenperlevel": 0.75,
-                "mpregen": 7.466,
+                "mpregen": 7.465,
                 "mpregenperlevel": 0.575,
                 "crit": 0,
                 "critperlevel": 0,
@@ -6871,7 +6921,7 @@
             }
         },
         "Xayah": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Xayah",
             "key": "498",
             "name": "자야",
@@ -6887,7 +6937,7 @@
                 "full": "Xayah.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 384,
+                "x": 432,
                 "y": 48,
                 "w": 48,
                 "h": 48
@@ -6915,12 +6965,12 @@
                 "critperlevel": 0,
                 "attackdamage": 60,
                 "attackdamageperlevel": 3.5,
-                "attackspeedperlevel": 3.3,
+                "attackspeedperlevel": 3.9,
                 "attackspeed": 0.625
             }
         },
         "Xerath": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Xerath",
             "key": "101",
             "name": "제라스",
@@ -6936,8 +6986,8 @@
                 "full": "Xerath.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 432,
-                "y": 48,
+                "x": 0,
+                "y": 96,
                 "w": 48,
                 "h": 48
             },
@@ -6969,7 +7019,7 @@
             }
         },
         "XinZhao": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "XinZhao",
             "key": "5",
             "name": "신 짜오",
@@ -6985,7 +7035,7 @@
                 "full": "XinZhao.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 0,
+                "x": 48,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -6999,7 +7049,7 @@
                 "hp": 570,
                 "hpperlevel": 92,
                 "mp": 273.8,
-                "mpperlevel": 35,
+                "mpperlevel": 55,
                 "movespeed": 345,
                 "armor": 35,
                 "armorperlevel": 3.5,
@@ -7019,7 +7069,7 @@
             }
         },
         "Yasuo": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Yasuo",
             "key": "157",
             "name": "야스오",
@@ -7035,7 +7085,7 @@
                 "full": "Yasuo.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 48,
+                "x": 96,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7069,7 +7119,7 @@
             }
         },
         "Yone": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Yone",
             "key": "777",
             "name": "요네",
@@ -7085,7 +7135,7 @@
                 "full": "Yone.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 96,
+                "x": 144,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7119,7 +7169,7 @@
             }
         },
         "Yorick": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Yorick",
             "key": "83",
             "name": "요릭",
@@ -7135,7 +7185,7 @@
                 "full": "Yorick.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 144,
+                "x": 192,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7149,7 +7199,7 @@
                 "hp": 580,
                 "hpperlevel": 100,
                 "mp": 300,
-                "mpperlevel": 40,
+                "mpperlevel": 60,
                 "movespeed": 340,
                 "armor": 39,
                 "armorperlevel": 4,
@@ -7169,7 +7219,7 @@
             }
         },
         "Yuumi": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Yuumi",
             "key": "350",
             "name": "유미",
@@ -7185,7 +7235,7 @@
                 "full": "Yuumi.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 192,
+                "x": 240,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7219,7 +7269,7 @@
             }
         },
         "Zac": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Zac",
             "key": "154",
             "name": "자크",
@@ -7235,7 +7285,7 @@
                 "full": "Zac.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 240,
+                "x": 288,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7269,7 +7319,7 @@
             }
         },
         "Zed": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Zed",
             "key": "238",
             "name": "제드",
@@ -7285,7 +7335,7 @@
                 "full": "Zed.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 288,
+                "x": 336,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7318,7 +7368,7 @@
             }
         },
         "Ziggs": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Ziggs",
             "key": "115",
             "name": "직스",
@@ -7334,7 +7384,7 @@
                 "full": "Ziggs.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 336,
+                "x": 384,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7367,7 +7417,7 @@
             }
         },
         "Zilean": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Zilean",
             "key": "26",
             "name": "질리언",
@@ -7383,7 +7433,7 @@
                 "full": "Zilean.png",
                 "sprite": "champion4.png",
                 "group": "champion",
-                "x": 384,
+                "x": 432,
                 "y": 96,
                 "w": 48,
                 "h": 48
@@ -7397,7 +7447,7 @@
                 "hp": 504,
                 "hpperlevel": 82,
                 "mp": 452,
-                "mpperlevel": 30,
+                "mpperlevel": 50,
                 "movespeed": 335,
                 "armor": 24,
                 "armorperlevel": 3.8,
@@ -7417,7 +7467,7 @@
             }
         },
         "Zoe": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Zoe",
             "key": "142",
             "name": "조이",
@@ -7431,10 +7481,10 @@
             },
             "image": {
                 "full": "Zoe.png",
-                "sprite": "champion4.png",
+                "sprite": "champion5.png",
                 "group": "champion",
-                "x": 432,
-                "y": 96,
+                "x": 0,
+                "y": 0,
                 "w": 48,
                 "h": 48
             },
@@ -7467,7 +7517,7 @@
             }
         },
         "Zyra": {
-            "version": "10.20.1",
+            "version": "10.24.1",
             "id": "Zyra",
             "key": "143",
             "name": "자이라",
@@ -7483,7 +7533,7 @@
                 "full": "Zyra.png",
                 "sprite": "champion5.png",
                 "group": "champion",
-                "x": 0,
+                "x": 48,
                 "y": 0,
                 "w": 48,
                 "h": 48
