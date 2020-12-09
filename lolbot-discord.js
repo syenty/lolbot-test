@@ -346,12 +346,10 @@ client.on("message", async msg => {
                             console.log(content)
                             let endIndex
 
-                            if(content[2] === "전적"){
-                                endIndex = 20
-                            }else{
-                                endIndex = 1
-                            }
-
+                            if(content[2] === "전적") endIndex = 20
+                            else if(content[2] === "최근") endIndex = 10
+                            else endIndex = 0
+                            
                             let requestUrl
 
                             if(content.length === 3){
@@ -413,13 +411,18 @@ client.on("message", async msg => {
                                 return msg.reply(autoMessage["bad-input"])
                             }
 
+                            // 전적
                             const refObj = {cnt:0,win:0,losses:0,kill:0,death:0,assist:0,damageInTeam:0,damageInAll:0}
                             let objArr = [
                                             {queueType:420,champions:[], ...refObj},
                                             {queueType:430,champions:[], ...refObj},
                                             {queueType:440,champions:[], ...refObj},
                                             {queueType:450,champions:[], ...refObj}
-                                        ]
+                            ]
+
+                            // 최근
+                            let recentObj = {}
+                            let recentObjArr = []
                             
                             // 전적 검색 시작
                             const getMatchData = new Promise((resolve, reject) => {
@@ -445,6 +448,7 @@ client.on("message", async msg => {
 
                                     // 검색한 게임 수
                                     let count = matches_obj.length
+                                    let tmpCount = count
                                     console.log(`게임 수 : ${count}`)
 
                                     let gameId
@@ -455,7 +459,7 @@ client.on("message", async msg => {
 
                                         requestUrl = `${keys.riotUrl}/match/v4/matches/${gameId}?api_key=${keys.riotAPI}`
 
-                                        request(requestUrl, (error, response, body) => {
+                                        request(requestUrl, async (error, response, body) => {
 
                                             if(error) throw error
 
@@ -487,22 +491,63 @@ client.on("message", async msg => {
 
                                                                         const stats = item.stats
 
-                                                                        objArr[objIdx].cnt++
-                                                                        objArr[objIdx].champions.push(item.championId)
-                                                                        if(stats.win){
-                                                                            objArr[objIdx].win++
-                                                                        }else{
-                                                                            objArr[objIdx].losses++
-                                                                        }
-                                                                        
-                                                                        objArr[objIdx].kill+=stats.kills
-                                                                        objArr[objIdx].death+=stats.deaths
-                                                                        objArr[objIdx].assist+=stats.assists
-                                                                        objArr[objIdx].damageInTeam+=convertUtil.getDealtRank(matchDetail,participantId,false)
-                                                                        objArr[objIdx].damageInAll+=convertUtil.getDealtRank(matchDetail,participantId,true)
+                                                                        if(content[2] === "전적"){
 
+                                                                            objArr[objIdx].cnt++
+                                                                            objArr[objIdx].champions.push(item.championId)
+                                                                            if(stats.win){
+                                                                                objArr[objIdx].win++
+                                                                            }else{
+                                                                                objArr[objIdx].losses++
+                                                                            }
+                                                                            
+                                                                            objArr[objIdx].kill+=stats.kills
+                                                                            objArr[objIdx].death+=stats.deaths
+                                                                            objArr[objIdx].assist+=stats.assists
+                                                                            objArr[objIdx].damageInTeam+=convertUtil.getDealtRank(matchDetail,participantId,false)
+                                                                            objArr[objIdx].damageInAll+=convertUtil.getDealtRank(matchDetail,participantId,true)
 
-                                                                        if(content[2] === "최근"){
+                                                                        }else if(content[2] === "최근"){
+
+                                                                            recentObj = {}
+
+                                                                            recentObj.queueType = matchDetail.queueId
+                                                                            recentObj.championId = item.championId
+                                                                            recentObj.gameDuration = matchDetail.gameDuration
+
+                                                                            recentObj.kill = stats.kills
+                                                                            recentObj.death = stats.deaths
+                                                                            recentObj.assist = stats.assists
+                                                                            recentObj.damageInTeam = convertUtil.getDealtRank(matchDetail,participantId,false)
+                                                                            recentObj.damageInAll = convertUtil.getDealtRank(matchDetail,participantId,true)
+
+                                                                            recentObj.spell1Id = item.spell1Id
+                                                                            recentObj.spell2Id = item.spell2Id
+                                                                            recentObj.item0 = stats.item0
+                                                                            recentObj.item1 = stats.item1
+                                                                            recentObj.item2 = stats.item2
+                                                                            recentObj.item3 = stats.item3
+                                                                            recentObj.item4 = stats.item4
+                                                                            recentObj.item5 = stats.item5
+                                                                            recentObj.item6 = stats.item6
+                                                                            recentObj.perkPrimaryStyle = stats.perkPrimaryStyle
+                                                                            recentObj.perkSubStyle = stats.perkSubStyle
+                                                                            recentObj.perk0 = stats.perk0
+                                                                            recentObj.perk1 = stats.perk1
+                                                                            recentObj.perk2 = stats.perk2
+                                                                            recentObj.perk3 = stats.perk3
+                                                                            recentObj.perk4 = stats.perk4
+                                                                            recentObj.perk5 = stats.perk5
+                                                                            recentObj.statPerk0 = stats.statPerk0
+                                                                            recentObj.statPerk1 = stats.statPerk1
+                                                                            recentObj.statPerk2 = stats.statPerk2
+
+                                                                            recentObjArr.push(recentObj)
+
+                                                                            // ----------------------------------
+
+                                                                            objArr[objIdx].cnt++
+                                                                            objArr[objIdx].champions.push(item.championId)
 
                                                                             objArr[objIdx].gameDuration = matchDetail.gameDuration
                                                                             objArr[objIdx].spell1Id = item.spell1Id
@@ -526,6 +571,9 @@ client.on("message", async msg => {
                                                                             objArr[objIdx].statPerk1 = stats.statPerk1
                                                                             objArr[objIdx].statPerk2 = stats.statPerk2
                                                                             
+                                                                        }else{
+                                                                            console.log("전적 => " + autoMessage["bad-input"])
+                                                                            return msg.reply(autoMessage["bad-input"])
                                                                         }
 
                                                                     }
@@ -545,33 +593,16 @@ client.on("message", async msg => {
                                                     //console.log(objArr)
                                                     let iconFlag = true
 
-                                                    objArr.forEach(async item => {
-                                                        if(item.cnt > 0){
+                                                    if(content[2] === "전적"){
 
-                                                            // tmpMsg += `${convertUtil.getQueueType(item.queueType)}\n`
-                                                            // tmpMsg += `${item.win}승 ${item.losses}패 (${Math.floor(100*item.win/(item.win+item.losses))}%)\n`
+                                                        objArr.forEach(item => {
+                                                            if(item.cnt > 0){
 
-                                                            // 사용한 챔피언
-                                                            const res = item.champions.reduce((acc, championId) => {
-                                                                acc[convertUtil.getChampionName(championId)] = (acc[convertUtil.getChampionName(championId)] || 0) + 1
-                                                                return acc
-                                                            },{})
-
-                                                            // let championLog = ""
-                                                            // Object.entries(res).forEach(([name, cnt], index) => {
-                                                            //     if(index === Object.keys(res).length-1){
-                                                            //         championLog += `${name} ${cnt}`
-                                                            //     }else{
-                                                            //         championLog += `${name} ${cnt}, `
-                                                            //     }
-                                                            // })
-                                                            // tmpMsg += `사용한 챔피언 : ${championLog}\n`
-
-                                                            // tmpMsg += `K/D/A : ${item.kill}/${item.death}/${item.assist} (${((item.kill+item.assist)/(item.death === 0 ? 1/1.2 : item.death)).toFixed(2)})\n`
-                                                            // tmpMsg += `평균 딜량 순위 : 팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등\n`
-                                                            // tmpMsg += '\n'
-
-                                                            if(content[2] === "전적"){
+                                                                // 사용한 챔피언
+                                                                const res = item.champions.reduce((acc, championId) => {
+                                                                    acc[convertUtil.getChampionName(championId)] = (acc[convertUtil.getChampionName(championId)] || 0) + 1
+                                                                    return acc
+                                                                },{})
 
                                                                 discordEmbed = new Discord.MessageEmbed()
 
@@ -597,67 +628,72 @@ client.on("message", async msg => {
                                                                 
                                                                 msg.channel.send(discordEmbed)
                                                                 // msg.reply(discordEmbed)
-
-                                                            }else if(content[2] === "최근"){
-
-                                                                console.log(item)
-                                                                console.log(res)
-
-                                                                // Set a new canvas to the dimensions of 700x250 pixels
-                                                                const canvas = Canvas.createCanvas(700, 325)
-
-                                                                // ctx (context) will be used to modify a lot of the canvas
-                                                                const ctx = canvas.getContext('2d')
-
-                                                                // Since the image takes time to load, you should await it
-                                                                const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
-                                                                const profileicon = await Canvas.loadImage(`${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
-
-                                                                // This uses the canvas dimensions to stretch the image onto the entire canvas
-                                                                ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-                                                                ctx.drawImage(profileicon, 25, 25, 50, 50)
-
-                                                                // Select the font size and type from one of the natively available fonts
-                                                                ctx.font = '30px sans-serif'
-                                                                // Select the style that will be used to fill the text in
-                                                                ctx.fillStyle = '#ffffff'
-                                                                ctx.textBaseline = "middle"
-
-                                                                // Actually fill the text with a solid color
-                                                                ctx.fillText(`${name} (${convertUtil.getQueueType(item.queueType)} ${convertUtil.secondTimeFormatter(item.gameDuration)}) `, 100, 50, 500)
-                                                                
-                                                                ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`), 25,100,50,50)
-                                                                ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell1Id)}`),100,100,50,50)
-                                                                ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell2Id)}`),175,100,50,50)
-
-                                                                if(item.perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,0,true)}`),25,175,50,50)
-                                                                if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),100,175,50,50)
-                                                                if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),175,175,50,50)
-                                                                if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),250,175,50,50)
-                                                                if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),325,175,50,50)
-                                                                if(item.perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,0,true)}`),400,175,50,50)
-                                                                if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),475,175,50,50)
-                                                                if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),550,175,50,50)
-
-                                                                if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,250,50,50)
-                                                                if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,250,50,50)
-                                                                if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,250,50,50)
-                                                                if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,250,50,50)
-                                                                if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,250,50,50)
-                                                                if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,250,50,50)
-                                                                if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,250,50,50)
-
-                                                                // Use helpful Attachment class structure to process the file for you
-                                                                const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
-
-                                                                msg.channel.send(attachment)
-
                                                             }
+                                                        })
 
-                                                            
+                                                    }else if(content[2] === "최근"){
 
-                                                        }
-                                                    })
+                                                        console.log(`게임 수 : ${tmpCount}`)
+                                                        console.log(recentObjArr)
+
+                                                        // Set a new canvas to the dimensions of 700x250 pixels
+                                                        const canvas = Canvas.createCanvas(700, 100 + (225*tmpCount))
+
+                                                        // ctx (context) will be used to modify a lot of the canvas
+                                                        const ctx = canvas.getContext('2d')
+
+                                                        // Since the image takes time to load, you should await it
+                                                        const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
+                                                        const profileicon = await Canvas.loadImage(`${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
+
+                                                        // This uses the canvas dimensions to stretch the image onto the entire canvas
+                                                        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+                                                        ctx.drawImage(profileicon, 25, 25, 50, 50)
+
+                                                        // Select the font size and type from one of the natively available fonts
+                                                        ctx.font = '30px sans-serif'
+                                                        // Select the style that will be used to fill the text in
+                                                        ctx.fillStyle = '#ffffff'
+                                                        ctx.textBaseline = "middle"
+
+                                                        // Actually fill the text with a solid color
+                                                        ctx.fillText(`${name}`, 100, 50, 500)
+
+                                                        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
+                                                        msg.channel.send(attachment)
+
+                                                        // (${convertUtil.getQueueType(item.queueType)} ${convertUtil.secondTimeFormatter(item.gameDuration)})
+
+                                                        recentObjArr.forEach(async item => {
+
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`), 25,100,50,50)
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell1Id)}`),100,100,50,50)
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell2Id)}`),175,100,50,50)
+
+                                                            if(item.perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,0,true)}`),25,175,50,50)
+                                                            if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),100,175,50,50)
+                                                            if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),175,175,50,50)
+                                                            if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),250,175,50,50)
+                                                            if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),325,175,50,50)
+                                                            if(item.perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,0,true)}`),400,175,50,50)
+                                                            if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),475,175,50,50)
+                                                            if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),550,175,50,50)
+
+                                                            if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,250,50,50)
+                                                            if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,250,50,50)
+                                                            if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,250,50,50)
+                                                            if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,250,50,50)
+                                                            if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,250,50,50)
+                                                            if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,250,50,50)
+                                                            if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,250,50,50)
+
+                                                        })
+
+                                                        // Use helpful Attachment class structure to process the file for you
+                                                        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
+                                                        msg.channel.send(attachment)
+
+                                                    }
 
                                                     return
                                                     // msg.author.send(tmpMsg)
