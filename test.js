@@ -233,5 +233,14 @@ function elapsedTimeFormatter(ctime){
 const convertUtil = new ConvertUtil
 // console.log(convertUtil.elapsedTimeFormatter(1607348574988))
 // console.log(convertUtil.secondTimeFormatter(1364))
-console.log(convertUtil.getSummonerSpellImage(4))
+// console.log(convertUtil.getSummonerSpellImage(4))
 
+const numArr = [1,2,3,4,5]
+
+function processArray(array) {
+    array.forEach(async item => {
+        await console.log(item)
+    })
+}
+
+processArray(numArr)

@@ -32,7 +32,7 @@ client.on("ready", () => {
     })
 })
 
-client.on("message", async msg => {
+client.on("message", msg => {
 
     if(msg.author.bot) return
     let content = msg.content
@@ -347,7 +347,7 @@ client.on("message", async msg => {
                             let endIndex
 
                             if(content[2] === "전적") endIndex = 20
-                            else if(content[2] === "최근") endIndex = 10
+                            else if(content[2] === "최근") endIndex = 5
                             else endIndex = 0
                             
                             let requestUrl
@@ -515,6 +515,7 @@ client.on("message", async msg => {
                                                                             recentObj.championId = item.championId
                                                                             recentObj.gameDuration = matchDetail.gameDuration
 
+                                                                            recentObj.win = stats.win
                                                                             recentObj.kill = stats.kills
                                                                             recentObj.death = stats.deaths
                                                                             recentObj.assist = stats.assists
@@ -543,33 +544,6 @@ client.on("message", async msg => {
                                                                             recentObj.statPerk2 = stats.statPerk2
 
                                                                             recentObjArr.push(recentObj)
-
-                                                                            // ----------------------------------
-
-                                                                            objArr[objIdx].cnt++
-                                                                            objArr[objIdx].champions.push(item.championId)
-
-                                                                            objArr[objIdx].gameDuration = matchDetail.gameDuration
-                                                                            objArr[objIdx].spell1Id = item.spell1Id
-                                                                            objArr[objIdx].spell2Id = item.spell2Id
-                                                                            objArr[objIdx].item0 = stats.item0
-                                                                            objArr[objIdx].item1 = stats.item1
-                                                                            objArr[objIdx].item2 = stats.item2
-                                                                            objArr[objIdx].item3 = stats.item3
-                                                                            objArr[objIdx].item4 = stats.item4
-                                                                            objArr[objIdx].item5 = stats.item5
-                                                                            objArr[objIdx].item6 = stats.item6
-                                                                            objArr[objIdx].perkPrimaryStyle = stats.perkPrimaryStyle
-                                                                            objArr[objIdx].perkSubStyle = stats.perkSubStyle
-                                                                            objArr[objIdx].perk0 = stats.perk0
-                                                                            objArr[objIdx].perk1 = stats.perk1
-                                                                            objArr[objIdx].perk2 = stats.perk2
-                                                                            objArr[objIdx].perk3 = stats.perk3
-                                                                            objArr[objIdx].perk4 = stats.perk4
-                                                                            objArr[objIdx].perk5 = stats.perk5
-                                                                            objArr[objIdx].statPerk0 = stats.statPerk0
-                                                                            objArr[objIdx].statPerk1 = stats.statPerk1
-                                                                            objArr[objIdx].statPerk2 = stats.statPerk2
                                                                             
                                                                         }else{
                                                                             console.log("전적 => " + autoMessage["bad-input"])
@@ -590,7 +564,7 @@ client.on("message", async msg => {
 
                                                 // 모든 게임 검색 후 종합한 데이터 가공
                                                 if(count === 0){
-                                                    //console.log(objArr)
+
                                                     let iconFlag = true
 
                                                     if(content[2] === "전적"){
@@ -634,7 +608,8 @@ client.on("message", async msg => {
                                                     }else if(content[2] === "최근"){
 
                                                         console.log(`게임 수 : ${tmpCount}`)
-                                                        console.log(recentObjArr)
+
+                                                        let canvasIdx = 0
 
                                                         // Set a new canvas to the dimensions of 700x250 pixels
                                                         const canvas = Canvas.createCanvas(700, 100 + (225*tmpCount))
@@ -643,11 +618,13 @@ client.on("message", async msg => {
                                                         const ctx = canvas.getContext('2d')
 
                                                         // Since the image takes time to load, you should await it
-                                                        const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
+                                                        ctx.beginPath()
+                                                        ctx.fillRect(0, 0, 700, 100 + (225*tmpCount))
+                                                        // const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
                                                         const profileicon = await Canvas.loadImage(`${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
 
                                                         // This uses the canvas dimensions to stretch the image onto the entire canvas
-                                                        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+                                                        // ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
                                                         ctx.drawImage(profileicon, 25, 25, 50, 50)
 
                                                         // Select the font size and type from one of the natively available fonts
@@ -659,37 +636,51 @@ client.on("message", async msg => {
                                                         // Actually fill the text with a solid color
                                                         ctx.fillText(`${name}`, 100, 50, 500)
 
-                                                        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
-                                                        msg.channel.send(attachment)
-
                                                         // (${convertUtil.getQueueType(item.queueType)} ${convertUtil.secondTimeFormatter(item.gameDuration)})
 
-                                                        recentObjArr.forEach(async item => {
+                                                        ctx.lineWidth = 5
 
-                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`), 25,100,50,50)
-                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell1Id)}`),100,100,50,50)
-                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell2Id)}`),175,100,50,50)
+                                                        for(const item of recentObjArr){
 
-                                                            if(item.perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,0,true)}`),25,175,50,50)
-                                                            if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),100,175,50,50)
-                                                            if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),175,175,50,50)
-                                                            if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),250,175,50,50)
-                                                            if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),325,175,50,50)
-                                                            if(item.perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,0,true)}`),400,175,50,50)
-                                                            if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),475,175,50,50)
-                                                            if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),550,175,50,50)
+                                                            ctx.beginPath()
+                                                            ctx.strokeStyle = item.win ? "blue" : "red"
+                                                            ctx.rect(10,90+(canvasIdx*225)+5,680,215)
+                                                            ctx.stroke()
+                                                            
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getChampionName(item.championId))}`), 25,100+(canvasIdx*225),50,50)
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell1Id)}`),100,100+(canvasIdx*225),50,50)
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell2Id)}`),175,100+(canvasIdx*225),50,50)
+                                                            
+                                                            // Select the font size and type from one of the natively available fonts
+                                                            ctx.font = '25px sans-serif'
 
-                                                            if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,250,50,50)
-                                                            if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,250,50,50)
-                                                            if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,250,50,50)
-                                                            if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,250,50,50)
-                                                            if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,250,50,50)
-                                                            if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,250,50,50)
-                                                            if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,250,50,50)
+                                                            ctx.textBaseline = "bottom"
+                                                            ctx.fillText(`${convertUtil.getQueueType(item.queueType)} ${convertUtil.secondTimeFormatter(item.gameDuration)}    K/D/A : ${item.kill}/${item.death}/${item.assist}`, 250, 100+(canvasIdx*225)+25, 450)
+                                                            
+                                                            ctx.textBaseline = "top"
+                                                            ctx.fillText(`딜량 : 팀내 ${item.damageInTeam}/5등 전체 ${item.damageInAll}/10등`, 250, 100+(canvasIdx*225)+25, 450)
 
-                                                        })
+                                                            if(item.perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,0,true)}`),25,175+(canvasIdx*225),50,50)
+                                                            if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),100,175+(canvasIdx*225),50,50)
+                                                            if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),175,175+(canvasIdx*225),50,50)
+                                                            if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),250,175+(canvasIdx*225),50,50)
+                                                            if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),325,175+(canvasIdx*225),50,50)
+                                                            if(item.perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,0,true)}`),400,175+(canvasIdx*225),50,50)
+                                                            if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),475,175+(canvasIdx*225),50,50)
+                                                            if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),550,175+(canvasIdx*225),50,50)
 
-                                                        // Use helpful Attachment class structure to process the file for you
+                                                            if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,250+(canvasIdx*225),50,50)
+                                                            if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,250+(canvasIdx*225),50,50)
+                                                            if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,250+(canvasIdx*225),50,50)
+                                                            if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,250+(canvasIdx*225),50,50)
+                                                            if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,250+(canvasIdx*225),50,50)
+                                                            if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,250+(canvasIdx*225),50,50)
+                                                            if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,250+(canvasIdx*225),50,50)
+
+                                                            canvasIdx++
+
+                                                        }
+
                                                         const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
                                                         msg.channel.send(attachment)
 
