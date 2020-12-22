@@ -23,249 +23,18 @@ let discordEmbed
 const info = champions.data
 const posiotionEnName = {탑:"TOP", 정글:"JUNGLE", 미드:"MID", 바텀:"ADC", 원딜:"ADC", 서포터:"SUPPORT", 서폿:"SUPPORT"}
 
-
-
-
-// flag : RECORD, RECENT
-async function loopMatches(matchData, emptyArray, emptyObj, id, flag) {
-
-    let loopLength
-
-    if(flag === "RECORD") loopLength = 20
-    else if (flag === "RECENT") loopLength = 10
-    else loopLength = 10
-
-    for(let i=0; i<loopLength; i++){
-
-        console.log(`1. ${i}`)
-
-        await new Promise(function(resolve, reject){
-
-            console.log(`2. ${matchData[i].gameId}`)
-
-            request(`${keys.riotUrl}/match/v4/matches/${matchData[i].gameId}?api_key=${keys.riotAPI}`, (error, response, body) => {
-
-                if(error) throw error
-    
-                if(response.statusCode === 200){
-                    const matchDetail = JSON.parse(body)
-
-                    console.log(`3. ${matchDetail.queueId}`)
-
-                    if(matchDetail.queueId === 420 || matchDetail.queueId === 430 || matchDetail.queueId === 440 || matchDetail.queueId === 450){
-                        matchDetail.participantIdentities.forEach(participantIdentity => {
-                            if(participantIdentity.player.summonerId === id){
-
-                                console.log(`4. ${participantIdentity.player.summonerId}`)
-
-                                const participantId = participantIdentity.participantId
-
-                                console.log(`5. ${participantIdentity.participantId}`)
-
-                                let objIdx
-                                const selectedQueueId = (obj) => obj.queueType === matchDetail.queueId
-
-                                matchDetail.participants.forEach(participant => {
-
-                                    const stats = participant.stats
-
-                                    if(participant.participantId === participantId){
-
-                                        console.log(`6. ${participant.participantId}`)
-                                        console.log(`7. ${emptyArray}`)
-
-                                        if(flag === "RECORD"){
-
-                                            objIdx = emptyArray.findIndex(selectedQueueId)
-
-                                            console.log(`8. ${objIdx}`)
-
-                                            if(objIdx > -1){
-
-                                                emptyArray[objIdx].cnt++
-                                                emptyArray[objIdx].champions.push(participant.championId)
-                                                if(stats.win){
-                                                    emptyArray[objIdx].win++
-                                                }else{
-                                                    emptyArray[objIdx].losses++
-                                                }
-                                                
-                                                emptyArray[objIdx].kill+=stats.kills
-                                                emptyArray[objIdx].death+=stats.deaths
-                                                emptyArray[objIdx].assist+=stats.assists
-                                                emptyArray[objIdx].damageInTeam+=convertUtil.getDealtRank(matchDetail,participantId,false)
-                                                emptyArray[objIdx].damageInAll+=convertUtil.getDealtRank(matchDetail,participantId,true)
-
-                                                console.log(`9. ${participant.championId}`)
-                                                resolve()
-                                            }else resolve()
-
-                                        }else if(flag === "RECENT"){
-
-                                            emptyObj = {}
-
-                                            emptyObj.queueType = matchDetail.queueId
-                                            emptyObj.championId = participant.championId
-                                            emptyObj.gameDuration = matchDetail.gameDuration
-
-                                            emptyObj.win = stats.win
-                                            emptyObj.kill = stats.kills
-                                            emptyObj.death = stats.deaths
-                                            emptyObj.assist = stats.assists
-                                            emptyObj.damageInTeam = convertUtil.getDealtRank(matchDetail,participantId,false)
-                                            emptyObj.damageInAll = convertUtil.getDealtRank(matchDetail,participantId,true)
-
-                                            emptyObj.spell1Id = participant.spell1Id
-                                            emptyObj.spell2Id = participant.spell2Id
-                                            emptyObj.item0 = stats.item0
-                                            emptyObj.item1 = stats.item1
-                                            emptyObj.item2 = stats.item2
-                                            emptyObj.item3 = stats.item3
-                                            emptyObj.item4 = stats.item4
-                                            emptyObj.item5 = stats.item5
-                                            emptyObj.item6 = stats.item6
-                                            emptyObj.perkPrimaryStyle = stats.perkPrimaryStyle
-                                            emptyObj.perkSubStyle = stats.perkSubStyle
-                                            emptyObj.perk0 = stats.perk0
-                                            emptyObj.perk1 = stats.perk1
-                                            emptyObj.perk2 = stats.perk2
-                                            emptyObj.perk3 = stats.perk3
-                                            emptyObj.perk4 = stats.perk4
-                                            emptyObj.perk5 = stats.perk5
-                                            emptyObj.statPerk0 = stats.statPerk0
-                                            emptyObj.statPerk1 = stats.statPerk1
-                                            emptyObj.statPerk2 = stats.statPerk2
-
-                                            emptyArray.push(emptyObj)
-                                            console.log(`8. ${emptyObj}`)
-                                            resolve()
-                                            
-                                        }else resolve()
-                                        // }else reject(new Error("Request is failed"))
-
-                                    }
-
-                                })
-                            }
-                            
-                        })
-                    }
-                }else{
-                    console.log(`Problem Detected : ${response.statusCode}`)
-                }
-            })
+function getMatchDetail(array, gameId) {
+    return new Promise(function(resolve, reject){
+        request(`${keys.riotUrl}/match/v4/matches/${gameId}?api_key=${keys.riotAPI}`, (error, response, body) => {
+            
         })
-    }
-    
+    })
 }
 
-async function drawRecentCanvas(canvas, recentArray, profileIconId, name){
-
-    console.log(`9. ${profileIconId} ${name}`)
-
-    // ctx (context) will be used to modify a lot of the canvas
-    const ctx = canvas.getContext('2d')
-
-    ctx.beginPath()
-    ctx.fillRect(0, 0, 700, 100 + (225*10))
-
-    // Since the image takes time to load, you should await it
-    // const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
-    const profileicon = await Canvas.loadImage(`${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
-
-    // This uses the canvas dimensions to stretch the image onto the entire canvas
-    // ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
-    ctx.drawImage(profileicon, 25, 25, 50, 50)
-
-    // Select the font size and type from one of the natively available fonts
-    ctx.font = '30px sans-serif'
-    // Select the style that will be used to fill the text in
-    ctx.fillStyle = '#ffffff'
-    ctx.textBaseline = "middle"
-
-    // Actually fill the text with a solid color
-    ctx.fillText(name, 100, 50, 500)
-    ctx.lineWidth = 5
-
-    for(let i=0; i<recentArray.length; i++){
-
-        await new Promise(async function(resolve, reject){
-
-            ctx.beginPath()
-            console.log(`10. ${recentArray[i].win}`)
-            ctx.strokeStyle = recentArray[i].win ? "blue" : "red"
-            ctx.rect(10,90+(i*225)+5,680,215)
-            ctx.stroke()
-
-            console.log(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getChampionName(recentArray[i].championId))}`)
-            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getChampionName(recentArray[i].championId))}`), 25,100+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell1Id)}`)
-            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell1Id)}`),100,100+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell2Id)}`)
-            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell2Id)}`),175,100+(i*225),50,50)
-
-            // Select the font size and type from one of the natively available fonts
-            ctx.font = '25px sans-serif'
-
-            ctx.textBaseline = "bottom"
-            ctx.fillText(`${convertUtil.getQueueType(recentArray[i].queueType)} ${convertUtil.secondTimeFormatter(recentArray[i].gameDuration)}    K/D/A : ${recentArray[i].kill}/${recentArray[i].death}/${recentArray[i].assist}`, 250, 100+(i*225)+25, 450)
-            
-            ctx.textBaseline = "top"
-            ctx.fillText(`딜량 : 팀내 ${recentArray[i].damageInTeam}/5등 전체 ${recentArray[i].damageInAll}/10등`, 250, 100+(i*225)+25, 450)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,0,true)}`)
-            if(recentArray[i].perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,0,true)}`),25,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk0,false)}`)
-            if(recentArray[i].perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk0,false)}`),100,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk1,false)}`)
-            if(recentArray[i].perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk1,false)}`),175,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk2,false)}`)
-            if(recentArray[i].perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk2,false)}`),250,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk3,false)}`)
-            if(recentArray[i].perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk3,false)}`),325,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,0,true)}`)
-            if(recentArray[i].perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,0,true)}`),400,175,50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk4,false)}`)
-            if(recentArray[i].perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk4,false)}`),475,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk5,false)}`)
-            if(recentArray[i].perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk5,false)}`),550,175+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item0}.png`)
-            if(recentArray[i].item0 !== 0 && recentArray[i].item0 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item0}.png`),25,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item1}.png`)
-            if(recentArray[i].item1 !== 0 && recentArray[i].item1 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item1}.png`),100,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item2}.png`)
-            if(recentArray[i].item2 !== 0 && recentArray[i].item2 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item2}.png`),175,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item3}.png`)
-            if(recentArray[i].item3 !== 0 && recentArray[i].item3 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item3}.png`),250,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item4}.png`)
-            if(recentArray[i].item4 !== 0 && recentArray[i].item4 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item4}.png`),325,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item5}.png`)
-            if(recentArray[i].item5 !== 0 && recentArray[i].item5 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item5}.png`),400,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item6}.png`)
-            if(recentArray[i].item6 !== 0 && recentArray[i].item6 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item6}.png`),475,250+(i*225),50,50)
-            
-            console.log(`11. ${i}`)
-            resolve()
-        })
-
-    }
-
+async function loopMatches(matchData) {
+    matchData.forEach(match => {
+        await getMatchDetail(array, match.gameId)
+    })
 }
 
 
@@ -687,67 +456,297 @@ client.on("message", async msg => {
                                 })
                             })
 
+                            loopMatches(matchData)
+
+                            return
+
                             getMatchData.then(matchData => {
 
                                 setTimeout(() => {
 
-                                    let iconFlag = true
+                                    const matches_obj = matchData
 
-                                    if(content[2] === "전적"){
-                                        loopMatches(matchData,objArr,refObj,id,"RECORD").then(res => {
-                                            objArr.forEach(item => {
-                                                if(item.cnt > 0){
-        
-                                                    // 사용한 챔피언
-                                                    const res = item.champions.reduce((acc, championId) => {
-                                                        acc[convertUtil.getChampionName(championId)] = (acc[convertUtil.getChampionName(championId)] || 0) + 1
-                                                        return acc
-                                                    },{})
-        
-                                                    discordEmbed = new Discord.MessageEmbed()
-        
-                                                    if(iconFlag){
-                                                        discordEmbed.setAuthor(name, `${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
-                                                        iconFlag = false
-                                                    }
-        
-                                                    discordEmbed
-                                                    .setTitle(`${convertUtil.getQueueType(item.queueType)}`)
-                                                    .setDescription(`${item.win}승 ${item.losses}패 (${Math.floor(100*item.win/(item.win+item.losses))}%)`)
-                                                    .setThumbnail(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`)
-                                                    .addField(`K/D/A`,
-                                                            `${item.kill}/${item.death}/${item.assist} (${((item.kill+item.assist)/(item.death === 0 ? 1/1.2 : item.death)).toFixed(2)})`,
-                                                            false)
-                                                    .addField(`평균 딜량 순위`,
-                                                            `팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등`,
-                                                            false)
-        
-                                                    Object.entries(res).forEach(item => {
-                                                        discordEmbed.addField(item[0],item[1],true)    
+                                    // 검색한 게임 수
+                                    let count = matches_obj.length
+                                    let tmpCount = count
+                                    console.log(`게임 수 : ${count}`)
+
+                                    let gameId
+
+                                    matches_obj.forEach(item => {
+
+                                        gameId = item.gameId
+
+                                        requestUrl = `${keys.riotUrl}/match/v4/matches/${gameId}?api_key=${keys.riotAPI}`
+
+                                        request(requestUrl, async (error, response, body) => {
+
+                                            if(error) throw error
+
+                                            if(response.statusCode === 200){
+
+                                                const matchDetail = JSON.parse(body)
+
+                                                count--
+
+                                                // 솔랭, 일반, 자랭, 칼바람 일때만 집계
+                                                if(matchDetail.queueId === 420 || matchDetail.queueId === 430 || matchDetail.queueId === 440 || matchDetail.queueId === 450){
+
+                                                    matchDetail.participantIdentities.forEach(item => {
+
+                                                        if(item.player.summonerId === id){
+
+                                                            const participantId = item.participantId
+
+                                                            const selectedQueueId = (obj) => obj.queueType === matchDetail.queueId
+                                                            let objIdx
+
+                                                            matchDetail.participants.forEach(item => {
+
+                                                                if(item.participantId === participantId){
+
+                                                                    objIdx = objArr.findIndex(selectedQueueId)
+
+                                                                    if(objIdx > -1){
+
+                                                                        const stats = item.stats
+
+                                                                        if(content[2] === "전적"){
+
+                                                                            objArr[objIdx].cnt++
+                                                                            objArr[objIdx].champions.push(item.championId)
+                                                                            if(stats.win){
+                                                                                objArr[objIdx].win++
+                                                                            }else{
+                                                                                objArr[objIdx].losses++
+                                                                            }
+                                                                            
+                                                                            objArr[objIdx].kill+=stats.kills
+                                                                            objArr[objIdx].death+=stats.deaths
+                                                                            objArr[objIdx].assist+=stats.assists
+                                                                            objArr[objIdx].damageInTeam+=convertUtil.getDealtRank(matchDetail,participantId,false)
+                                                                            objArr[objIdx].damageInAll+=convertUtil.getDealtRank(matchDetail,participantId,true)
+
+                                                                        }else if(content[2] === "최근"){
+
+                                                                            recentObj = {}
+
+                                                                            recentObj.queueType = matchDetail.queueId
+                                                                            recentObj.championId = item.championId
+                                                                            recentObj.gameDuration = matchDetail.gameDuration
+
+                                                                            recentObj.kill = stats.kills
+                                                                            recentObj.death = stats.deaths
+                                                                            recentObj.assist = stats.assists
+                                                                            recentObj.damageInTeam = convertUtil.getDealtRank(matchDetail,participantId,false)
+                                                                            recentObj.damageInAll = convertUtil.getDealtRank(matchDetail,participantId,true)
+
+                                                                            recentObj.spell1Id = item.spell1Id
+                                                                            recentObj.spell2Id = item.spell2Id
+                                                                            recentObj.item0 = stats.item0
+                                                                            recentObj.item1 = stats.item1
+                                                                            recentObj.item2 = stats.item2
+                                                                            recentObj.item3 = stats.item3
+                                                                            recentObj.item4 = stats.item4
+                                                                            recentObj.item5 = stats.item5
+                                                                            recentObj.item6 = stats.item6
+                                                                            recentObj.perkPrimaryStyle = stats.perkPrimaryStyle
+                                                                            recentObj.perkSubStyle = stats.perkSubStyle
+                                                                            recentObj.perk0 = stats.perk0
+                                                                            recentObj.perk1 = stats.perk1
+                                                                            recentObj.perk2 = stats.perk2
+                                                                            recentObj.perk3 = stats.perk3
+                                                                            recentObj.perk4 = stats.perk4
+                                                                            recentObj.perk5 = stats.perk5
+                                                                            recentObj.statPerk0 = stats.statPerk0
+                                                                            recentObj.statPerk1 = stats.statPerk1
+                                                                            recentObj.statPerk2 = stats.statPerk2
+
+                                                                            recentObjArr.push(recentObj)
+
+                                                                            // ----------------------------------
+
+                                                                            objArr[objIdx].cnt++
+                                                                            objArr[objIdx].champions.push(item.championId)
+
+                                                                            objArr[objIdx].gameDuration = matchDetail.gameDuration
+                                                                            objArr[objIdx].spell1Id = item.spell1Id
+                                                                            objArr[objIdx].spell2Id = item.spell2Id
+                                                                            objArr[objIdx].item0 = stats.item0
+                                                                            objArr[objIdx].item1 = stats.item1
+                                                                            objArr[objIdx].item2 = stats.item2
+                                                                            objArr[objIdx].item3 = stats.item3
+                                                                            objArr[objIdx].item4 = stats.item4
+                                                                            objArr[objIdx].item5 = stats.item5
+                                                                            objArr[objIdx].item6 = stats.item6
+                                                                            objArr[objIdx].perkPrimaryStyle = stats.perkPrimaryStyle
+                                                                            objArr[objIdx].perkSubStyle = stats.perkSubStyle
+                                                                            objArr[objIdx].perk0 = stats.perk0
+                                                                            objArr[objIdx].perk1 = stats.perk1
+                                                                            objArr[objIdx].perk2 = stats.perk2
+                                                                            objArr[objIdx].perk3 = stats.perk3
+                                                                            objArr[objIdx].perk4 = stats.perk4
+                                                                            objArr[objIdx].perk5 = stats.perk5
+                                                                            objArr[objIdx].statPerk0 = stats.statPerk0
+                                                                            objArr[objIdx].statPerk1 = stats.statPerk1
+                                                                            objArr[objIdx].statPerk2 = stats.statPerk2
+                                                                            
+                                                                        }else{
+                                                                            console.log("전적 => " + autoMessage["bad-input"])
+                                                                            return msg.reply(autoMessage["bad-input"])
+                                                                        }
+
+                                                                    }
+
+                                                                }
+
+                                                            })
+
+                                                        }
+
                                                     })
-                                                    
-                                                    msg.channel.send(discordEmbed)
-                                                    // msg.reply(discordEmbed)
+
                                                 }
-                                            })
+
+                                                // 모든 게임 검색 후 종합한 데이터 가공
+                                                if(count === 0){
+                                                    //console.log(objArr)
+                                                    let iconFlag = true
+
+                                                    if(content[2] === "전적"){
+
+                                                        objArr.forEach(item => {
+                                                            if(item.cnt > 0){
+
+                                                                // 사용한 챔피언
+                                                                const res = item.champions.reduce((acc, championId) => {
+                                                                    acc[convertUtil.getChampionName(championId)] = (acc[convertUtil.getChampionName(championId)] || 0) + 1
+                                                                    return acc
+                                                                },{})
+
+                                                                discordEmbed = new Discord.MessageEmbed()
+
+                                                                if(iconFlag){
+                                                                    discordEmbed.setAuthor(name, `${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
+                                                                    iconFlag = false
+                                                                }
+    
+                                                                discordEmbed
+                                                                .setTitle(`${convertUtil.getQueueType(item.queueType)}`)
+                                                                .setDescription(`${item.win}승 ${item.losses}패 (${Math.floor(100*item.win/(item.win+item.losses))}%)`)
+                                                                .setThumbnail(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`)
+                                                                .addField(`K/D/A`,
+                                                                          `${item.kill}/${item.death}/${item.assist} (${((item.kill+item.assist)/(item.death === 0 ? 1/1.2 : item.death)).toFixed(2)})`,
+                                                                          false)
+                                                                .addField(`평균 딜량 순위`,
+                                                                          `팀내 ${(item.damageInTeam/item.cnt).toFixed(1)}등 / 전체 ${(item.damageInAll/item.cnt).toFixed(1)}등`,
+                                                                          false)
+    
+                                                                Object.entries(res).forEach(item => {
+                                                                    discordEmbed.addField(item[0],item[1],true)    
+                                                                })
+                                                                
+                                                                msg.channel.send(discordEmbed)
+                                                                // msg.reply(discordEmbed)
+                                                            }
+                                                        })
+
+                                                    }else if(content[2] === "최근"){
+
+                                                        console.log(`게임 수 : ${tmpCount}`)
+                                                        console.log(recentObjArr)
+
+                                                        // Set a new canvas to the dimensions of 700x250 pixels
+                                                        const canvas = Canvas.createCanvas(700, 100 + (225*tmpCount))
+
+                                                        // ctx (context) will be used to modify a lot of the canvas
+                                                        const ctx = canvas.getContext('2d')
+
+                                                        // Since the image takes time to load, you should await it
+                                                        const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
+                                                        const profileicon = await Canvas.loadImage(`${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
+
+                                                        // This uses the canvas dimensions to stretch the image onto the entire canvas
+                                                        ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+                                                        ctx.drawImage(profileicon, 25, 25, 50, 50)
+
+                                                        // Select the font size and type from one of the natively available fonts
+                                                        ctx.font = '30px sans-serif'
+                                                        // Select the style that will be used to fill the text in
+                                                        ctx.fillStyle = '#ffffff'
+                                                        ctx.textBaseline = "middle"
+
+                                                        // Actually fill the text with a solid color
+                                                        ctx.fillText(`${name}`, 100, 50, 500)
+
+                                                        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
+                                                        msg.channel.send(attachment)
+
+                                                        // (${convertUtil.getQueueType(item.queueType)} ${convertUtil.secondTimeFormatter(item.gameDuration)})
+
+                                                        recentObjArr.forEach(async item => {
+
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`), 25,100,50,50)
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell1Id)}`),100,100,50,50)
+                                                            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(item.spell2Id)}`),175,100,50,50)
+
+                                                            if(item.perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,0,true)}`),25,175,50,50)
+                                                            if(item.perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk0,false)}`),100,175,50,50)
+                                                            if(item.perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk1,false)}`),175,175,50,50)
+                                                            if(item.perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk2,false)}`),250,175,50,50)
+                                                            if(item.perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkPrimaryStyle,item.perk3,false)}`),325,175,50,50)
+                                                            if(item.perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,0,true)}`),400,175,50,50)
+                                                            if(item.perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk4,false)}`),475,175,50,50)
+                                                            if(item.perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(item.perkSubStyle,item.perk5,false)}`),550,175,50,50)
+
+                                                            if(item.item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item0}.png`),25,250,50,50)
+                                                            if(item.item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item1}.png`),100,250,50,50)
+                                                            if(item.item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item2}.png`),175,250,50,50)
+                                                            if(item.item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item3}.png`),250,250,50,50)
+                                                            if(item.item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item4}.png`),325,250,50,50)
+                                                            if(item.item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item5}.png`),400,250,50,50)
+                                                            if(item.item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${item.item6}.png`),475,250,50,50)
+
+                                                        })
+
+                                                        // Use helpful Attachment class structure to process the file for you
+                                                        
+                                                        /*
+                                                        const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
+                                                        msg.channel.send(attachment)
+                                                        */
+
+                                                    }
+
+                                                    return
+                                                    // msg.author.send(tmpMsg)
+                                                    // return msg.reply(tmpMsg)
+                                                }
+
+                                            }else if(response.statusCode){
+                                                console.log("전적.검색 => " + autoMessage["limit-exceeded"])
+
+                                                // msg.author.send(autoMessage["limit-exceeded"])
+                                                return msg.reply(autoMessage["limit-exceeded"])
+                                            }else{
+                                                console.log("전적.검색 => " + autoMessage["non-info"])
+                                                
+                                                // msg.author.send(autoMessage["non-info"])
+                                                return msg.reply(autoMessage["non-info"])
+                                            }
+
                                         })
-                                    }else if(content[2] === "최근"){
-                                        loopMatches(matchData,recentObjArr,recentObj,id,"RECENT").then(async res => {
 
-                                            // Set a new canvas to the dimensions of 700x250 pixels
-                                            const canvas = Canvas.createCanvas(700, 100 + (225*10))
+                                    })
 
-                                            drawRecentCanvas(canvas, recentObjArr, profileIconId, name).then(res => {
-                                                // Use helpful Attachment class structure to process the file for you
-                                                const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'recent-game.png')
-                                                msg.channel.send(attachment)
-                                            })
+                                    if(matches_obj.length === 0){
+                                        console.log("전적.검색.결과 => " + autoMessage["non-info"])
 
-                                        })
+                                        // msg.author.send(autoMessage["non-info"])
+                                        return msg.reply(autoMessage["non-info"])
                                     }
 
-                                }, 1500)
-
+                                },1500)
                             })
 
                         }else{

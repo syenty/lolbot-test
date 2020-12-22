@@ -233,5 +233,43 @@ function elapsedTimeFormatter(ctime){
 const convertUtil = new ConvertUtil
 // console.log(convertUtil.elapsedTimeFormatter(1607348574988))
 // console.log(convertUtil.secondTimeFormatter(1364))
-console.log(convertUtil.getSummonerSpellImage(4))
+// console.log(convertUtil.getSummonerSpellImage(4))
+
+const numArr = [1,3,8,4,7,9,10,2,6,5]
+const output = []
+
+function delay(item) {
+    return new Promise(function(resolve, reject){
+        setTimeout(function(){
+            console.log(item);
+            resolve();
+        },item*100)
+    })
+}
+
+async function test(array) {
+    for(let i=0; i< array.length; i++){
+        await delay(array[i]);
+    }
+    console.log('Done');
+}
+
+
+
+async function test(array) {
+    for(let i=0; i< array.length; i++){
+        await new Promise(function(resolve, reject){
+            setTimeout(function(){
+                console.log(array[i]);
+                output.push(array[i]*10)
+                resolve();
+            },array[i]*100)
+        })
+    }
+    console.log('Done');
+}
+
+test(numArr).then(res => {
+    console.log(output)
+})
 

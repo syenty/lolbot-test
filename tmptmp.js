@@ -108,7 +108,6 @@ async function loopMatches(matchData, emptyArray, emptyObj, id, flag) {
                                             emptyObj.championId = participant.championId
                                             emptyObj.gameDuration = matchDetail.gameDuration
 
-                                            emptyObj.win = stats.win
                                             emptyObj.kill = stats.kills
                                             emptyObj.death = stats.deaths
                                             emptyObj.assist = stats.assists
@@ -166,15 +165,12 @@ async function drawRecentCanvas(canvas, recentArray, profileIconId, name){
     // ctx (context) will be used to modify a lot of the canvas
     const ctx = canvas.getContext('2d')
 
-    ctx.beginPath()
-    ctx.fillRect(0, 0, 700, 100 + (225*10))
-
     // Since the image takes time to load, you should await it
-    // const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
+    const background = await Canvas.loadImage('./dragontail/img/bg/A6000000.png')
     const profileicon = await Canvas.loadImage(`${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
 
     // This uses the canvas dimensions to stretch the image onto the entire canvas
-    // ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
     ctx.drawImage(profileicon, 25, 25, 50, 50)
 
     // Select the font size and type from one of the natively available fonts
@@ -185,82 +181,32 @@ async function drawRecentCanvas(canvas, recentArray, profileIconId, name){
 
     // Actually fill the text with a solid color
     ctx.fillText(name, 100, 50, 500)
-    ctx.lineWidth = 5
 
     for(let i=0; i<recentArray.length; i++){
 
         await new Promise(async function(resolve, reject){
+            // ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getMaxSelectedChampionName(Object.entries(res)))}`), 25,100,50,50)
+            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell1Id)}`),100,100,50,50)
+            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell2Id)}`),175,100,50,50)
 
-            ctx.beginPath()
-            console.log(`10. ${recentArray[i].win}`)
-            ctx.strokeStyle = recentArray[i].win ? "blue" : "red"
-            ctx.rect(10,90+(i*225)+5,680,215)
-            ctx.stroke()
-
-            console.log(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getChampionName(recentArray[i].championId))}`)
-            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/champion/${convertUtil.getChampionImage(convertUtil.getChampionName(recentArray[i].championId))}`), 25,100+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell1Id)}`)
-            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell1Id)}`),100,100+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell2Id)}`)
-            ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/spell/${convertUtil.getSummonerSpellImage(recentArray[i].spell2Id)}`),175,100+(i*225),50,50)
-
-            // Select the font size and type from one of the natively available fonts
-            ctx.font = '25px sans-serif'
-
-            ctx.textBaseline = "bottom"
-            ctx.fillText(`${convertUtil.getQueueType(recentArray[i].queueType)} ${convertUtil.secondTimeFormatter(recentArray[i].gameDuration)}    K/D/A : ${recentArray[i].kill}/${recentArray[i].death}/${recentArray[i].assist}`, 250, 100+(i*225)+25, 450)
-            
-            ctx.textBaseline = "top"
-            ctx.fillText(`딜량 : 팀내 ${recentArray[i].damageInTeam}/5등 전체 ${recentArray[i].damageInAll}/10등`, 250, 100+(i*225)+25, 450)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,0,true)}`)
-            if(recentArray[i].perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,0,true)}`),25,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk0,false)}`)
-            if(recentArray[i].perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk0,false)}`),100,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk1,false)}`)
-            if(recentArray[i].perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk1,false)}`),175,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk2,false)}`)
-            if(recentArray[i].perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk2,false)}`),250,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk3,false)}`)
-            if(recentArray[i].perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk3,false)}`),325,175+(i*225),50,50)
-
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,0,true)}`)
+            if(recentArray[i].perkPrimaryStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,0,true)}`),25,175,50,50)
+            if(recentArray[i].perk0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk0,false)}`),100,175,50,50)
+            if(recentArray[i].perk1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk1,false)}`),175,175,50,50)
+            if(recentArray[i].perk2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk2,false)}`),250,175,50,50)
+            if(recentArray[i].perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk3,false)}`),325,175,50,50)
             if(recentArray[i].perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,0,true)}`),400,175,50,50)
+            if(recentArray[i].perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk4,false)}`),475,175,50,50)
+            if(recentArray[i].perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk5,false)}`),550,175,50,50)
 
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk4,false)}`)
-            if(recentArray[i].perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk4,false)}`),475,175+(i*225),50,50)
+            if(recentArray[i].item0 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item0}.png`),25,250,50,50)
+            if(recentArray[i].item1 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item1}.png`),100,250,50,50)
+            if(recentArray[i].item2 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item2}.png`),175,250,50,50)
+            if(recentArray[i].item3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item3}.png`),250,250,50,50)
+            if(recentArray[i].item4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item4}.png`),325,250,50,50)
+            if(recentArray[i].item5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item5}.png`),400,250,50,50)
+            if(recentArray[i].item6 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item6}.png`),475,250,50,50)
 
-            console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk5,false)}`)
-            if(recentArray[i].perk5 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk5,false)}`),550,175+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item0}.png`)
-            if(recentArray[i].item0 !== 0 && recentArray[i].item0 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item0}.png`),25,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item1}.png`)
-            if(recentArray[i].item1 !== 0 && recentArray[i].item1 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item1}.png`),100,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item2}.png`)
-            if(recentArray[i].item2 !== 0 && recentArray[i].item2 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item2}.png`),175,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item3}.png`)
-            if(recentArray[i].item3 !== 0 && recentArray[i].item3 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item3}.png`),250,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item4}.png`)
-            if(recentArray[i].item4 !== 0 && recentArray[i].item4 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item4}.png`),325,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item5}.png`)
-            if(recentArray[i].item5 !== 0 && recentArray[i].item5 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item5}.png`),400,250+(i*225),50,50)
-
-            console.log(`${keys.riotCdn}/img/item/${recentArray[i].item6}.png`)
-            if(recentArray[i].item6 !== 0 && recentArray[i].item6 <= 6695) ctx.drawImage(await Canvas.loadImage(`${keys.riotCdn}/img/item/${recentArray[i].item6}.png`),475,250+(i*225),50,50)
-            
-            console.log(`11. ${i}`)
+            console.log(`10. ${i}`)
             resolve()
         })
 
