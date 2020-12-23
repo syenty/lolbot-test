@@ -231,7 +231,7 @@ async function drawRecentCanvas(canvas, recentArray, profileIconId, name){
             if(recentArray[i].perk3 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkPrimaryStyle,recentArray[i].perk3,false)}`),325,175+(i*225),50,50)
 
             console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,0,true)}`)
-            if(recentArray[i].perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,0,true)}`),400,175,50,50)
+            if(recentArray[i].perkSubStyle !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,0,true)}`),400,175+(i*225),50,50)
 
             console.log(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk4,false)}`)
             if(recentArray[i].perk4 !== 0) ctx.drawImage(await Canvas.loadImage(`${keys.nonVersionCdn}/img/${convertUtil.getRunesImage(recentArray[i].perkSubStyle,recentArray[i].perk4,false)}`),475,175+(i*225),50,50)
@@ -746,7 +746,7 @@ client.on("message", async msg => {
                                         })
                                     }
 
-                                }, 1500)
+                                }, 1000)
 
                             })
 
