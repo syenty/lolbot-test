@@ -8,23 +8,23 @@ const urlencode = require('urlencode')
 // npm install canvas
 const Canvas = require('canvas');
 
-const keys = require("./keys.json")
+// const keys = require("./keys.json")
 const autoMessage = require("./auto-message.json")
 
 const champions = require("./json-lol/champions.json")
 const queue = require("./json-lol/queues.json")
 const emblems = require("./json-lol/emblems.json")
+const properties = require("./properties.json")
 
-const ConvertUtil = require('./lib/convertUtil')
+const ConvertUtil = require('./lib/convertUtil');
+const { default: axios } = require('axios');
 const convertUtil = new ConvertUtil
 
 let discordEmbed
+let keys
 
 const info = champions.data
 const posiotionEnName = {탑:"TOP", 정글:"JUNGLE", 미드:"MID", 바텀:"ADC", 원딜:"ADC", 서포터:"SUPPORT", 서폿:"SUPPORT"}
-
-
-
 
 // flag : RECORD, RECENT
 async function loopMatches(matchData, emptyArray, emptyObj, id, flag) {
@@ -141,7 +141,6 @@ async function loopMatches(matchData, emptyArray, emptyObj, id, flag) {
                                             resolve()
                                             
                                         }else resolve()
-                                        // }else reject(new Error("Request is failed"))
 
                                     }
 
@@ -332,22 +331,6 @@ client.on("message", async msg => {
                 })
             })
 
-            // '780075008684720149' => [CategoryChannel],
-            // '780075008684720150' => [CategoryChannel],
-            // '780075008684720151' => [TextChannel],
-            // '780075008684720153' => [VoiceChannel]
-
-            // for (const [channelID, channel] of channels) {
-            //     for (const [memberID, member] of channel.members) {
-            //         member.setVoiceChannel('497910775512563742')
-            //         .then(() => console.log(`Moved ${member.user.tag}.`))
-            //         .catch(console.error);
-            //     }
-            // }
-
-            // const list = client.guilds.cache.get("780075008684720148")
-            // list.members.cache.forEach(member => console.log(`member : ${member.user.username}`))
-
             console.log()
             console.log("========== ROLE ==========")
             msg.guild.roles.cache.each(role => {
@@ -413,16 +396,6 @@ client.on("message", async msg => {
 
         }else if(content.startsWith("롤")){
 
-            // const author = msg.author
-
-            // 블랙리스트 미구현
-            // const authorid = author.id
-            // if(blacklist.includes(authorid)) return
-
-            // 멤버기능 미구현
-            // const user = msg.mentions.users.first()
-            // const member = user && msg.guild.member(user)
-
             // 모든 공백 1칸으로
             content = content.replace(/ +/g, " ")
             content = content.split(" ")
@@ -474,11 +447,6 @@ client.on("message", async msg => {
                                             tmpMsg += `티어 : ${item.tier} ${item.rank} ${item.leaguePoints}pt\n`
                                             tmpMsg += `${item.wins}승 ${item.losses}패 (${Math.round(100*item.wins/(item.wins+item.losses))}%)`
 
-                                            // msg.author.send(emblems[`${item.tier.toLowerCase()}`])
-                                            // msg.author.send(tmpMsg)
-
-                                            // return msg.reply(tmpMsg)
-
                                             discordEmbed = new Discord.MessageEmbed()
                                             .setAuthor(item.summonerName, `${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
                                             .setDescription(`${item.tier} ${item.rank} ${item.leaguePoints}pt`)
@@ -495,9 +463,7 @@ client.on("message", async msg => {
                                 }else{
                                     console.log("티어 => " + autoMessage["non-info"])
 
-                                    // msg.author.send(autoMessage["non-info"])
                                     return msg.reply(autoMessage["non-info"])
-                                    // msg.channel.send(autoMessage["non-info"])
                                 }
 
                             })
@@ -555,9 +521,6 @@ client.on("message", async msg => {
                                         }
                                     })
 
-                                    // msg.author.send(tmpMsg)
-                                    // return msg.reply(tmpMsg)
-
                                     discordEmbed = new Discord.MessageEmbed()
                                     .setAuthor(name, `${keys.riotCdn}/img/profileicon/${profileIconId}.png`)
                                     .setDescription(`${convertUtil.getQueueType(spectator_obj.gameQueueConfigId)} ${convertUtil.elapsedTimeFormatter(new Date().getTime()-spectator_obj.gameStartTime)} 진행중`)
@@ -582,7 +545,6 @@ client.on("message", async msg => {
                                 }else{
                                     console.log("관전 => " + autoMessage["non-info"])
 
-                                    // msg.author.send(autoMessage["non-info"])
                                     return msg.reply(autoMessage["non-info"])
                                 }
 
@@ -613,7 +575,6 @@ client.on("message", async msg => {
                                     if(typeof queueId === "undefined"){
                                         console.log(autoMessage["bad-input"])
 
-                                        // msg.author.send(autoMessage["bad-input"])
                                         return msg.reply(autoMessage["bad-input"])
                                     }
                                     requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?queue=${queueId}&endIndex=${endIndex}&beginIndex=0&api_key=${keys.riotAPI}`
@@ -624,7 +585,6 @@ client.on("message", async msg => {
                                     if(typeof championId === "undefined"){
                                         console.log(autoMessage["bad-input"])
 
-                                        // msg.author.send(autoMessage["bad-input"])
                                         return msg.reply(autoMessage["bad-input"])
                                     }
                                     requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&endIndex=${endIndex}&beginIndex=0&api_key=${keys.riotAPI}`
@@ -637,8 +597,6 @@ client.on("message", async msg => {
                                 // 잘못된 챔피언 이름 입력시
                                 if(typeof championId === "undefined"){
                                     console.log(autoMessage["bad-input"])
-                                    
-                                    // msg.author.send(autoMessage["bad-input"])
                                     return msg.reply(autoMessage["bad-input"])
                                 }
                                 
@@ -646,15 +604,11 @@ client.on("message", async msg => {
                                 // 잘못된 게임 종류 입력시
                                 if(typeof queueId === "undefined"){
                                     console.log(autoMessage["bad-input"])
-
-                                    // msg.author.send(autoMessage["bad-input"])
                                     return msg.reply(autoMessage["bad-input"])
                                 }
                                 requestUrl = `${keys.riotUrl}/match/v4/matchlists/by-account/${accountId}?champion=${championId}&queue=${queueId}&endIndex=${endIndex}&beginIndex=0&api_key=${keys.riotAPI}`
                             }else{
                                 console.log("전적 => " + autoMessage["bad-input"])
-
-                                // msg.author.send(autoMessage["bad-input"])
                                 return msg.reply(autoMessage["bad-input"])
                             }
 
@@ -676,12 +630,9 @@ client.on("message", async msg => {
                                 request(requestUrl, (error, response, body) => {
                                     if(error) throw error
                                     if(response.statusCode === 200){
-                                        // const matches_obj = JSON.parse(body).matches
                                         resolve(JSON.parse(body).matches)
                                     }else{
                                         console.log("전적.검색실패 => " + autoMessage["non-info"])
-
-                                        // msg.author.send(autoMessage["non-info"])
                                         return msg.reply(autoMessage["non-info"])
                                     }
                                 })
@@ -727,7 +678,7 @@ client.on("message", async msg => {
                                                     })
                                                     
                                                     msg.channel.send(discordEmbed)
-                                                    // msg.reply(discordEmbed)
+
                                                 }
                                             })
                                         })
@@ -757,13 +708,9 @@ client.on("message", async msg => {
 
                     }else if(response.statusCode === 403){
                         console.log("소환사명 => " + autoMessage["bad-access"])
-
-                        // msg.author.send(autoMessage["bad-access"])
                         return msg.reply(autoMessage["bad-access"])
                     }else{
                         console.log("소환사명 => " + autoMessage["bad-input"])
-
-                        // msg.author.send(autoMessage["bad-input"])
                         return msg.reply(autoMessage["bad-input"])
                     }
 
@@ -774,7 +721,6 @@ client.on("message", async msg => {
         }else if(content.startsWith("옵지")){
 
             tmpMsg = "현재 지원되지 않는 기능입니다.\n"
-            // msg.author.send(tmpMsg)
             return msg.reply(tmpMsg)
 
             // 모든 공백 1칸으로
@@ -785,7 +731,6 @@ client.on("message", async msg => {
                 console.log("메시지 => " + autoMessage["bad-input"])
 
                 msg.author.send(autoMessage["bad-input"])
-                // return msg.reply(autoMessage["bad-input"])
             }
 
             // 웹 드라이버 초기화
@@ -807,7 +752,6 @@ client.on("message", async msg => {
                     console.log("옵지.꿀챔 => " + autoMessage["bad-input"])
 
                     msg.author.send(autoMessage["bad-input"])                    
-                    // return msg.reply(autoMessage["bad-input"])
                 }
 
                 if(position === "원딜") position = "바텀"
@@ -856,7 +800,6 @@ client.on("message", async msg => {
 
                                 msg.author.send(tmpMsg)
                                 
-                                // return msg.reply(tmpMsg)
                             })
                         })
             
@@ -868,9 +811,7 @@ client.on("message", async msg => {
 
                 if(content.length < 4){
                     console.log("옵지.카운터 => " + autoMessage["bad-input"])
-
                     msg.author.send(autoMessage["bad-input"])
-                    // return msg.reply(autoMessage["bad-input"])
                 }
 
                 const championName = convertUtil.getChampionEnName(content[2])
@@ -878,9 +819,7 @@ client.on("message", async msg => {
 
                 if(typeof championName === "undefined" || typeof position === "undefined"){
                     console.log("옵지.카운터 => " + autoMessage["bad-input"])
-
                     msg.author.send(autoMessage["bad-input"])
-                    // return msg.reply(autoMessage["bad-input"])
                 }
 
                 const url = `https://www.op.gg/champion/${championName}/statistics/${position}`
@@ -904,13 +843,11 @@ client.on("message", async msg => {
                     
                                     Promise.all(namePromiseArr).then(names => {
                                         for(let i=0; i<(names.length >= 10 ? 10 : names.length); i++){
-                                            // console.log(names[i])
                                             tmpMsg += `${i+1}위 ${names[i]}\n`
                                         }
                                         driver.close()
 
                                         msg.author.send(tmpMsg)
-                                        // return msg.reply(tmpMsg)
                                     })
                     
                                 })
@@ -927,8 +864,6 @@ client.on("message", async msg => {
 
         }else{
             console.log("메시지 => " + autoMessage["bad-input"])
-
-            // msg.author.send(autoMessage["bad-input"])
             return msg.reply(autoMessage["bad-input"])
         }
 
@@ -936,4 +871,11 @@ client.on("message", async msg => {
 
 })
 
-client.login(keys.token)
+axios.get(`${properties.middleware}/discord/lolbot.json`)
+.then(res => {
+    keys = res.data
+    client.login(res.data.token)
+    .then(toekn => {
+        console.log("login success")
+    })
+}).catch(err => console.log(err))
